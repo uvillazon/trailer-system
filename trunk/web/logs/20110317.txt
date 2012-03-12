@@ -1,0 +1,44 @@
+error		Edwin	16:51:26	/trailer/login.phpEl sistema se encuentra en mantenimiento lamentamos las molestias causadas1
+
+error		Edwin	16:56:26	/trailer/login.phpEl usuario es incorrecto 
+
+error		Edwin	16:56:37	/trailer/login.phpEl usuario es incorrecto 
+
+error		Edwin	16:56:50	/trailer/login.phpEl usuario es incorrecto 
+
+error		Edwin	16:57:48	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	16:58:46	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	16:59:46	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	16:59:53	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:00:02	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:01:17	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:02:01	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:02:03	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:02:04	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:02:04	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:02:04	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:02:04	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:02:04	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:02:12	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:02:21	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:02:59	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:03:00	/trailer/login.phpError en el codigo de verificacion
+
+error		Edwin	17:04:23	/trailer/login.phpEl usuario es incorrecto 
+
