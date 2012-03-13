@@ -1,4 +1,5 @@
-<?php 
+<?php
+//cambiospor gilber
 session_name("trailer");
 session_start();
 include("bd/bd.php");
