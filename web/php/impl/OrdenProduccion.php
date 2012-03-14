@@ -974,4 +974,75 @@ WHERE
 
 }
 
+function getSqlDeleteOrdenesItem($idItemOrden){
+    return "delete from detalleorden WHERE iddetalleorden = '$idItemOrden';";
+}
+function EliminarOrdenProduccionItem($idItemOrden,$callback,$return=false)
+{
+    $dev['mensaje'] = "";
+    $dev['error']   = "";
+
+    //    $sql[] = getSqlDeleteLinea_marca($idlinea);
+    $sql[] =  getSqlDeleteOrdenesItem($idItemOrden);
+
+    //    MostrarConsulta($sql);
+    if(ejecutarConsultaSQLBeginCommit($sql))
+    {
+        $dev['mensaje'] = "Se Elimino correctamente";
+        $dev['error'] = "true";
+        $dev['resultado'] = "";
+    }
+    else
+    {
+        $dev['mensaje'] = "No se puede Eliminar...  Existe el valor en alguna tabla";
+        $dev['error'] = "false";
+        $dev['resultado'] = "";
+    }
+    if($return == true)
+    {
+        return $dev;
+    }
+    else
+    {
+        $json = new Services_JSON();
+        $output = $json->encode($dev);
+        print($output);
+    }
+}
+
+function getSqlDeleteOrdenes($idordenes){
+    return "delete from ordenproduccion WHERE idordenproduccion = '$idordenes';";
+}
+function EliminarOrdenProduccion($idorden,$callback,$return=false)
+{
+    $dev['mensaje'] = "";
+    $dev['error']   = "";
+
+    //    $sql[] = getSqlDeleteLinea_marca($idlinea);
+    $sql[] =  getSqlDeleteOrdenes($idorden);
+
+    //    MostrarConsulta($sql);
+    if(ejecutarConsultaSQLBeginCommit($sql))
+    {
+        $dev['mensaje'] = "Se Elimino correctamente";
+        $dev['error'] = "true";
+        $dev['resultado'] = "";
+    }
+    else
+    {
+        $dev['mensaje'] = "No se puede Eliminar...  Existe el valor en alguna tabla";
+        $dev['error'] = "false";
+        $dev['resultado'] = "";
+    }
+    if($return == true)
+    {
+        return $dev;
+    }
+    else
+    {
+        $json = new Services_JSON();
+        $output = $json->encode($dev);
+        print($output);
+    }
+}
 ?>

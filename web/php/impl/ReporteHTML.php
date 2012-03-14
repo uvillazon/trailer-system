@@ -1,4 +1,218 @@
 <?php
+function ListaBordados($return)
+{
+    $html .= "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>";
+    $html .= "<html>";
+    $html .= "<head>";
+    $html .= "<title></title>";
+    $html .= "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>";
+    $html .= "<link href='".$_SESSION["ruta"]."css/print.css' rel='stylesheet' type='text/css' media='all'>";
+    //$html .= "<link href='../print.css' rel='stylesheet' type='text/css' media='all'>";
+    $html .= "</head>";
+    $html .= "<body>";
+    $html .= "<table  ' align='center'  border='0' style='width:750px; font-size:11px; font-family:Tahoma;'>  ";
+    $html .= "<tr>";
+   
+        $html .= "<td style='width:150px;height:100px;border-bottom:1px solid #000000;text-align:center;font-size:20px;font-family:Tahoma;'>";
+        $html .= "REPORTE<br>DE<br> BORDADOS";
+        $html .= "</td>";
+    //    $html .= "<td style='width:200px;height:100px;border-bottom:1px solid #000000;text-align:right;font-size:11px;font-family:Tahoma;'>";
+    //    $html .= "<table cellpadding='0' cellspacing='0' border='0' style='width:200px;'>";
+    //    //$html .= "<tr><td align='right'><img src='".$_SESSION["ruta"]."php/impl/codigo.jpg'><td><tr>";
+    //    $html .= "<tr><td align='right' style='font-size:11px; font-family:Tahoma; text-align:center;font-weight:bold;'>".$ven[0]['idcompra']."<td><tr>";
+    //    $html .= "</table>";
+    //    $html .= "</td>";
+    $html .= "</tr>";
+   // $html .= "<tr>";
+    $html .= "<td>";
+  //  $html .= "<table cellpadding='0' cellspacing='0' border='0' style='width:750px; font-size:11px; font-family:Tahoma;'>";
+   // $html .= "<tr><td style='width:100px;font-size:11px;font-weight:bold;'></td><td style='width:500px;' ></td></tr>";
+   // $html .= "<tr><td style='font-size:11px;font-weight:bold;'>Almacen:</td><td>".$almacen."</td></tr>";
+   // $html .= "<tr><td style='font-size:11px;font-weight:bold;'>Tipo Cambio:</td><td>".$cambioNuevo."</td></tr>";
+    //$html .= "<tr><td style='font-size:11px;font-weight:bold;'>Fecha</td><td>".date("Y-m-d")."</td></tr><br>";
+   // $html .= "</table>";
+    $html .= "</td>";
+    $html .= "</tr>";
+    //        $html .= "<tr>";
+    $sql = "SELECT
+  prod.idproducto,
+  prod.nombre,
+  prod.imagen,
+  emp.nombre as empresa
+FROM
+  productos prod,
+  empresas emp
+WHERE
+  prod.idempresa = emp.idempresa";
+    //    MostrarConsulta($sql);
+    $producto = dibujarTuplaOfSQLNormal($sql, "Informacion de los Bordados");
+    $html2 .= $producto['resultado'];
+    $html .="</tr>";
+    $html .="<tr>";
+    $html .="<td align='center'>$html2</td>";
+
+    //echo "no esta vacio";
+    $sqlKar = "SELECT
+  k.saldocantidad AS 'Cantidad Disponible en Almacen',
+  k.costounitario AS Costo,
+  k.fechamodificacion AS Fecha,
+  k.saldobs AS 'Inventario en Bs',
+  k.precio2bs AS 'Precio por Mayor',
+  k.precio1bs AS 'Precio por Unidad'
+FROM
+  kardexalmacen k
+WHERE
+  k.idalmacen = '$idalmacen' AND
+  k.idproducto = '$idproducto'
+";
+
+
+    //    $sqlKar = "SELECT k.saldocantidad AS Cantidad, k.costounitario AS Costo, k.fechamodificacion AS Fecha
+    //FROM kardexalmacen k WHERE k.idproducto = '$idproducto' and k.idalmacen = '$idalmacen' ";
+    $kardex = dibujarTuplaOfSQLNormal($sqlKar, "Kardex");
+    $html1 .= $kardex['resultado'];
+    $html .="<td align='center'>$html1</td>";
+    $html .= "</tr>";
+
+
+    $html .= "<tr><td colspan='4' align='center' style='border-top:solid 1px #000000;'><div id='pie'>
+</div></td></tr>";
+    $html .= "</table>";
+    $html .= "</body>";
+    $html .= "</html>";
+    if($return == true)
+    {
+        return $html;
+    }
+    else
+    {
+        echo $html;
+    }
+
+}
+function reporteProductos($return)
+{
+     $hoy = date("Y-m-d");
+
+        $html.="    <!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>";
+        $html.="<html>";
+        $html.=" <head>";
+        $html.=" <title></title>";
+        $html.=" <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>";
+        // $html.=" <link href='".$_SESSION["ruta"]."css/print.css' rel='stylesheet' type='text/css' media='all'>";
+        //<link href='../print.css' rel='stylesheet' type='text/css' media='all'>
+        $html.="  </head>";
+        $html.="  <body>";
+        $html.=" <table cellpadding='0' cellspacing='0' border='0' style='width:750px; font-size:11px; font-family:Tahoma;'>";
+        $html.="  <tr>";
+        $html.="  <td style='width:400px;height:100px;border-bottom:1px solid #000000;'>ROPA DE TRABAJO Y MATERIAL PUBLICITARIO TEXTIL<br>
+      De: Martha Magne Iquise<br>
+      Calle Agustín Aspiazu Nº 640<br>
+      Zona Las Cuadras<br>
+      </td>";
+        $html.=" <td style='width:150px;height:100px;border-bottom:1px solid #000000;text-align:center;font-size:20px;font-family:Tahoma;'>MOVIMIENTO <br>";
+        $html.="      DE<br>";
+        $html.="PRODUCTOS</td>";
+        $html.="  <td style='width:200px;height:100px;border-bottom:1px solid #000000;text-align:right;font-size:11px;font-family:Tahoma;'>";
+        $html.="   <table cellpadding='0' cellspacing='0' border='0' style='width:200px;'>";
+        $html.="   <tr>";
+        $html.="     <td align='right'>";
+        $html.=" <tr><td> </td> FECHA:  $hoy     </tr>";
+        $html.="  <td>";
+        $html.="   <tr>";
+        $html.="       <tr>";
+        $html.="        <td align='right' style='font-size:11px; font-family:Tahoma; text-align:center;font-weight:bold;'>";
+
+        $html.="         <td><tr>";
+        $html.="  </table>";
+        $html.="   </td>";
+        $html.="   </tr>";
+        $html.="   <tr>";
+        $html.="   <td colspan='3'>";
+        $html.="   <table cellpadding='0' cellspacing='0' border='0' style='width:750px; font-size:11px; font-family:Tahoma;'>";
+        $html.="   <tr><td style='width:100px;font-size:11px;font-weight:bold;'></td><td style='width:500px;' ></td></tr><br>";
+        $html.="    </table>";
+        $html.="    </td>";
+        $html.="   </tr>";
+
+        $html.="          <tr>";
+        $html.="  <td colspan='1'>";
+
+        $html.="   </td>";
+
+        $html.="   <tr>";
+        $html.="     <td>";
+        $html.="<strong>Responsable:</strong> ".$responsable;
+        $html.="</td>";
+        $html.="   </tr>";
+
+        $html.="   <tr>";
+        $html.="     <td>";
+        $html.="<strong>Proveedor: </strong>".$proveedor;
+        $html.="</td>";
+        $html.="   </tr>";
+        $html.="   <tr>";
+        $html.="     <td><strong>Por lo Siguiente:....</strong></td>";
+        $html.="   </tr>";
+        $sql = "SELECT
+  det.cantidad AS Cantidad,
+  det.detalle AS Detalle,
+  det.unidad AS Unidad,
+  det.preciounitario AS `P/uni`,
+  det.preciototal AS Total
+FROM
+  detallecompra det
+WHERE
+  det.idcompra = '$idcompra'";
+        $table = dibujarTablaOfSQLNormal($sql, "Detalle Compra");
+        $html.="  <tr><td colspan='4' align='center'><div id='pie'>";
+        $html.="  <p>";
+        $html.=$table['resultado'];
+        $html .="</p>";
+        $html.="  <p> </p>";
+        $html.=" </div></td></tr>";
+
+        $html.="   <tr>";
+        $html.="     <td><strong>Son:</strong>  ".convertir_a_letras($totalMonto);
+        $html.="</td>";
+        $html.="     <td></td>";
+
+        $html.="     <td>Total Precio</td>";
+        $html.="   </tr>";
+
+        $html.="   <tr>";
+        $html.="     <td></td>";
+        $html.="     <td></td>";
+
+        $html.="     <td>Total Descuento</td>";
+        $html.="   </tr>";
+        $html.="   <tr>";
+        $html.="     <td></td>";
+        $html.="     <td></td>";
+
+        $html.="     <td>Total Compra</td>";
+        $html.="   </tr>";
+
+        $html.="   <tr><td colspan='4' align='center' style='border-top:solid 1px #000000;'><div id='pie'>";
+        $html.="   <p><br />
+         Cochabamba - Bolivia<br />
+         Telf.: 4233928 - 4542962
+    </p>
+</div></td></tr>
+
+    </table>
+    </body>
+    </html>";
+        if($return == true)
+        {
+            return $html;
+        }
+        else
+        {
+            echo $html;
+        }
+    
+}
 function MovimientoProducto($codigoproducto,$fechainiV,$fechafinV, $return)
 {
 
