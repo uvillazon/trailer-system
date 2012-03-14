@@ -71,6 +71,7 @@ public class Logos extends Panel {
     private ToolbarButton nuevoProducto;
     private ToolbarButton detalle;
     private ToolbarButton enlazarOP;
+    private ToolbarButton bordados;
     private BuscadorToolBar buscadorToolBar;
     protected String buscarempresa;
     protected String buscarnombre;
@@ -220,7 +221,11 @@ public class Logos extends Panel {
 
         enlazarOP.setTooltip(tipsConfig101);
 
-
+        bordados = new ToolbarButton("Bordados");
+        bordados.setEnableToggle(true);
+         QuickTipsConfig tipsConfig30 = new QuickTipsConfig();
+        tipsConfig30.setText("Reporte de Bordados");
+        bordados.setTooltip(tipsConfig30);
 
         pagingToolbar = new PagingToolbar(store);
         pagingToolbar.setPageSize(100);
@@ -239,6 +244,8 @@ public class Logos extends Panel {
         pagingToolbar.addButton(imagenproducto);
         pagingToolbar.addSeparator();
         pagingToolbar.addButton(enlazarOP);
+        pagingToolbar.addSeparator();
+        pagingToolbar.addButton(bordados);
 
 
         String items[] = {"Empresa", "Nombre"};
@@ -600,6 +607,21 @@ public class Logos extends Panel {
                     }
                 });
 
+
+        //**************************************************
+        //*********** REPORTE DE BORDADOS
+        //**************************************************
+        bordados.addListener(
+                new ButtonListenerAdapter() {
+
+                    @Override
+                    public void onClick(Button button, EventObject e) {
+
+                            String enlTemp = "funcion=reporteBordadosHTML";
+                            verReporte(enlTemp);
+                         
+                    }
+                });
         //**************************************************
         //*********** LISTENERS DE LA TABLA
         //**************************************************

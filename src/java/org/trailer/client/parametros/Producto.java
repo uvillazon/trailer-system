@@ -73,6 +73,8 @@ public class Producto extends Panel {
     private ToolbarButton eliminarProducto;
     private ToolbarButton nuevoProducto;
     private ToolbarButton cotizacion;
+
+    private ToolbarButton reporte;
     private BuscadorToolBar buscadorToolBar;
     protected String buscarcodigo;
     protected String buscarnombre;
@@ -216,10 +218,13 @@ public class Producto extends Panel {
         //tipsConfig.setTitle("Tip Title");
         imagenproducto.setTooltip(tipsConfig10);
 
-//        reporteCliente = new ToolbarButton("Reporte");
-//        reporteCliente.setEnableToggle(true);
-//        tipsConfig3.setText("Reporte Cliente");
-//        reporteCliente.setTooltip(tipsConfig3);
+
+
+        reporte = new ToolbarButton("Reporte");
+        reporte.setEnableToggle(true);
+        QuickTipsConfig tipsConfig30 = new QuickTipsConfig();
+        tipsConfig30.setText("Reporte Productos");
+        reporte.setTooltip(tipsConfig30);
 
 //
 
@@ -238,6 +243,7 @@ public class Producto extends Panel {
         pagingToolbar.addButton(cotizacion);
         pagingToolbar.addSeparator();
         pagingToolbar.addButton(imagenproducto);
+        pagingToolbar.addButton(reporte);
 
 
         String items[] = {"Codigo", "Nombre", "Categoria"};
@@ -569,6 +575,23 @@ public class Producto extends Panel {
                         imagenproducto.setPressed(false);
                     }
                 });
+        //**************************************************
+        //*********** reporte de productos
+        //**************************************************
+           reporte.addListener(new ButtonListenerAdapter(){
+
+                     @Override
+                    public void onClick(Button button, EventObject e) {
+                        Record[] records = cbSelectionModel.getSelections();
+                     
+                            String enlTemp = "funcion=ListaProductos";
+                            verReporte(enlTemp);
+
+
+
+                    }
+
+           });
 
         //**************************************************
         //*********** LISTENERS DE LA TABLA
