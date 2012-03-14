@@ -194,6 +194,7 @@ public class ListaProductosProceso {
                 Record[] records = cbSelectionModel.getSelections();
                 if (records.length == 1) {
                     selecionado = records[0].getAsString("id");
+                   
                     grid.stopEditing();
                     store.remove(cbSelectionModel.getSelected());
                     grid.startEditing(0, 0);

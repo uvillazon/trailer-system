@@ -4,6 +4,13 @@
  */
 package org.trailer.client.produccion;
 
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.Response;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 import com.gwtext.client.widgets.Button;
 import com.gwtext.client.widgets.Component;
 import com.gwtext.client.widgets.MessageBox;
@@ -41,6 +48,7 @@ import com.gwtext.client.widgets.form.event.TextFieldListenerAdapter;
 import com.gwtext.client.widgets.grid.GridView;
 import com.gwtext.client.widgets.grid.RowParams;
 import com.gwtext.client.widgets.layout.TableLayout;
+import org.trailer.client.util.Conector;
 
 /**
  *
@@ -357,8 +365,42 @@ public class ListaProductosOrden {
                 Record[] records = cbSelectionModel.getSelections();
                 if (records.length == 1) {
                     selecionado = records[0].getAsString("id");
+                    // MessageBox.alert("No hay producto selecionado para eliminar y/o selecciono mas de uno."+selecionado);
                     grid.stopEditing();
                     store.remove(cbSelectionModel.getSelected());
+                    //
+                    String enlace = "php/OrdenProduccion.php?funcion=EliminarOrdenProduccionItem&idordenDetalle=" + selecionado;
+                                Utils.setErrorPrincipal("Eliminando el Compra", "cargar");
+                                final Conector conec = new Conector(enlace, false);
+                                try {
+                                    conec.getRequestBuilder().sendRequest("asdf", new RequestCallback() {
+
+                                        public void onResponseReceived(Request request, Response response) {
+                                            String data = response.getText();
+                                            JSONValue jsonValue = JSONParser.parse(data);
+                                            JSONObject jsonObject;
+                                            if ((jsonObject = jsonValue.isObject()) != null) {
+                                                String errorR = Utils.getStringOfJSONObject(jsonObject, "error");
+                                                String mensajeR = Utils.getStringOfJSONObject(jsonObject, "mensaje");
+                                                if (errorR.equalsIgnoreCase("true")) {
+                                                    Utils.setErrorPrincipal(mensajeR, "mensaje");
+                                                    //reload();
+                                                } else {
+                                                    Utils.setErrorPrincipal(mensajeR, "error");
+                                                }
+                                            }
+                                        }
+
+                                        public void onError(Request request, Throwable exception) {
+                                            Utils.setErrorPrincipal("Ocurrio un error al conectar con el servidor", "error");
+                                        }
+
+
+                                    });
+                                } catch (RequestException ex) {
+                                    Utils.setErrorPrincipal("Ocurrio un error al conectar con el servidor", "error");
+                                }
+                    //
                     grid.startEditing(0, 0);
                 } else {
                     MessageBox.alert("No hay producto selecionado para eliminar y/o selecciono mas de uno.");
