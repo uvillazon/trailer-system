@@ -64,7 +64,15 @@ if((permitido("fun4001", $_SESSION['codigo'])==true)||(permitido("fun4000", $_SE
         }
         
     }
-
+    else if ($funcion == "EliminarOrdenProduccion")
+    {
+        EliminarOrdenProduccion($_GET['idordenproduccion'],$_GET['callback'], $_GET['_dc'], false);
+    }
+    else if($funcion == "EliminarOrdenProduccionItem")
+    {
+        //echo("llego");
+        EliminarOrdenProduccionItem($_GET['idordenDetalle'],$_GET['callback'], $_GET['_dc'], false);
+    }
     else if ($funcion == "BuscarOrdenPorId"){
         $id = $_GET['idordenproduccion'];
         BuscarOrdenPorId($_GET['callback'], $_GET['_dc'], $id, false);

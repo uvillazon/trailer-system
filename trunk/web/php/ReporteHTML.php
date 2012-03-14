@@ -49,5 +49,15 @@ else if($funcion == "reporteProduccionHTML"){
     reporteProduccionHTML($id, false);
 
 }
+else if($funcion == "ListaProductos")
+{
+    //echo ("aqui");
+    reporteProductos(false);
+}
+else if($funcion == "reporteBordadosHTML")
+{
+   
+    ListaBordados(false);
+}
 
 ?>
