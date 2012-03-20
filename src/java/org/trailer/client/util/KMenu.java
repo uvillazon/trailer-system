@@ -39,6 +39,7 @@ import org.trailer.client.produccionproceso.EntregaProceso;
 import org.trailer.client.produccionproceso.ListaProduccionProceso;
 import org.trailer.client.reportes.ConsultaMateriaPrima;
 import org.trailer.client.reportes.ConsultaProducto;
+import org.trailer.client.reportes.ReporteOrdenes;
 import org.trailer.client.reportes.StockMateriaPrima;
 import org.trailer.client.sistema.Cargo;
 import org.trailer.client.sistema.Categoria;
@@ -844,6 +845,17 @@ public class KMenu implements MenuListener {
             //                }
 
 
+            }
+             if (menuItemId.equalsIgnoreCase("fun6003")) {
+                ReporteOrdenes stock = new ReporteOrdenes(this, panel);
+                if (panel.getTabPanel() == null) {
+                    Utils.setErrorPrincipal("No existe el manejador de pestanas", "error");
+                } else {
+                    Utils.setErrorPrincipal("Se cargo el manejador", "mensaje");
+                    panel.getTabPanel().add(stock);
+                    panel.getTabPanel().activate(stock.getId());
+                    panel.getTabPanel().scrollToTab(stock, true);
+                }
             }
             if (menuItemId.equalsIgnoreCase("fun7000")) {
                 CrearCorte stock = new CrearCorte(this, panel);

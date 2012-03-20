@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.trailer.client.produccion;
+package org.trailer.client.reportes;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
@@ -56,7 +56,7 @@ import org.trailer.client.util.KMenu;
  *
  * @author buggy
  */
-public class ListarOrdenes extends Panel {
+public class ReporteOrdenes extends Panel {
 
     private GridPanel grid;
     private ColumnConfig idColumn;
@@ -75,7 +75,7 @@ public class ListarOrdenes extends Panel {
     private ToolbarButton buscar;
     PagingToolbar pagingToolbar = new PagingToolbar();
     private ToolbarButton detalle;
-    private OrdenProduccion formulario;
+//    private OrdenProduccion formulario;
     public MainEntryPoint pan;
     public KMenu kmenu;
     protected ExtElement ext_element;
@@ -89,21 +89,21 @@ public class ListarOrdenes extends Panel {
     private ColumnConfig estadoopColumn;
     private ColumnConfig hoy;
 
-    public ListarOrdenes() {
+    public ReporteOrdenes() {
         this.setClosable(true);
-        this.setId("TPfun4001");
+        this.setId("TPfun6003");
         setIconCls("tab-icon");
         setAutoScroll(false);
         setTitle("Lista Orden P.");
         onModuleLoad();
     }
 
-    public ListarOrdenes(KMenu kmenu, MainEntryPoint panel) {
+    public ReporteOrdenes(KMenu kmenu, MainEntryPoint panel) {
 
         this.kmenu = kmenu;
         this.pan = panel;
         this.setClosable(true);
-        this.setId("TPfun4001");
+        this.setId("TPfun6003");
         setIconCls("tab-icon");
         setAutoScroll(false);
         setTitle("Lista Orden P.");
@@ -142,7 +142,7 @@ public class ListarOrdenes extends Panel {
         estadoopColumn = new ColumnConfig("Estado OP", "estadoop", 150, true);
         estadoopColumn = new ColumnConfig("Estado OP", "estadoop", 150, true);
         hoy = new ColumnConfig("Hoy","hoy",50,true);
-        
+
          hoy.setRenderer(new Renderer() {
 
             public String render(Object value, CellMetadata cellMetadata, Record record, int rowIndex, int colNum, Store store) {
@@ -252,7 +252,7 @@ public class ListarOrdenes extends Panel {
 //                    observacionColumn,
 
                 };
-       
+
         columnModel = new ColumnModel(columns);
 
         grid = new EditorGridPanel();
@@ -269,12 +269,12 @@ public class ListarOrdenes extends Panel {
         grid.setFrame(true);
         //grid.setStripeRows(true);
         grid.setIconCls("grid-icon");
-    
+
         grid.setView(new GridView() {
 
             @Override
             public String getRowClass(Record record, int index, RowParams rowParams, Store store) {
-            
+
                 String estado = record.getAsString("estado");
                 //MessageBox.alert("llego aqui"+estado);
                 if (estado.equals("completado") == true) {
@@ -290,7 +290,7 @@ public class ListarOrdenes extends Panel {
             }
 
 
-            
+
         });
         grid.addGridRowListener(new GridRowListenerAdapter() {
 
@@ -303,7 +303,7 @@ public class ListarOrdenes extends Panel {
                 String enlTemp = "funcion=reporteOrdenHTML&idordenproduccion=" + selecionado;
                 verReporte(enlTemp);
             }
-            
+
         });
 
         editarOrden = new ToolbarButton("Editar Orden");
@@ -418,9 +418,9 @@ public class ListarOrdenes extends Panel {
                                 String numeroproduccion = Utils.getStringOfJSONObject(jsonObject, "numeroproduccion");
 //                                    OrdenProduccion ordenproduccion = new OrdenProduccion(clientes, productos, responsables, empresas, telas, colores, numeroproduccion);
 
-                                formulario = null;
-                                formulario = new OrdenProduccion(clientes, productos, responsables, empresas, telas, colores, numeroproduccion, orden, detalles);
-                                kmenu.seleccionarOpcion(null, "fun4000", e, formulario);
+//                                formulario = null;
+//                                formulario = new OrdenProduccion(clientes, productos, responsables, empresas, telas, colores, numeroproduccion, orden, detalles);
+  //                              kmenu.seleccionarOpcion(null, "fun4000", e, formulario);
 
 
                             }
