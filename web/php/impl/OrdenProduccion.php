@@ -426,6 +426,7 @@ WHERE
     $detallebordado = $orden->detallebordado;
     $detallecostura = $orden->detallecostura;
     $sql[] = getSqlNewOrdenproduccion($idordenproduccion, $numeroorden, $idcliente, $idempresa, $idresponsable, $fechaentrega, $fecharecepcion, $montototal, $montoapagar, $saldo, $observacion, $estado, $numero, $idusuario, $cliente, $numerorecibo, $return);
+    
     //    $sql[] = getSqlNewOrdenproduccion($idordenproduccion, $numeroorden, $idcliente, $idempresa, $idresponsable, $fechaentrega,$fecharecepcion,  $montototal, $montoapagar, $saldo, $observacion, $estado, $numero, $idusuario,$cliente,$detallecostura, $detallebordado, $return);
     $sql[] = getSqlNewCredito($idordenproduccion, $idcliente, $idempresa, $montototal, $saldo, $observacion, $idresponsable, $fecharecepcion, $return);
     $numerocA = findUltimoID("detallecredito", "numero", true);
@@ -468,7 +469,7 @@ WHERE
         print($output);
         exit;
     }
-//                MostrarConsulta($sql);
+         //       MostrarConsulta($sql);
     if(ejecutarConsultaSQLBeginCommit($sql)) {
         //        for($k=0;$k<count($movimiento);$k++){
         //            //            echo $movimiento[$j]['idproducto'];
@@ -1013,6 +1014,19 @@ function EliminarOrdenProduccionItem($idItemOrden,$callback,$return=false)
 function getSqlDeleteOrdenes($idordenes){
     return "delete from ordenproduccion WHERE idordenproduccion = '$idordenes';";
 }
+function getSqlDeleteDetalleOrden($idorden)
+{
+    return "delete from detalleorden where idordenproduccion = '$idorden';";
+}
+function DeleteCredito($idorden)
+{
+    return "delete from `credito` where idordenproduccion = '$idorden'";
+
+}
+function DeleteDetalleCredito($idorden)
+{
+    return "delete from detallecredito where idordenproduccion = '$idorden'";
+}
 function EliminarOrdenProduccion($idorden,$callback,$return=false)
 {
     $dev['mensaje'] = "";
@@ -1020,7 +1034,9 @@ function EliminarOrdenProduccion($idorden,$callback,$return=false)
 
     //    $sql[] = getSqlDeleteLinea_marca($idlinea);
     $sql[] =  getSqlDeleteOrdenes($idorden);
-
+    $sql[] = getSqlDeleteDetalleOrden($idorden);
+    $sql[] = DeleteCredito($idorden);
+    $sql[] = DeleteDetalleCredito($idorden);
     //    MostrarConsulta($sql);
     if(ejecutarConsultaSQLBeginCommit($sql))
     {
