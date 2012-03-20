@@ -570,12 +570,28 @@ public class ListaProductosOrden {
                 String tela1 = com_estado.getValueAsString().trim();
                 grid.getSelectionModel().getSelected().set("estado", tela1);
                 String tela2 = txa_detallebordado.getValueAsString().trim();
+                if(tela2.length() == 0)
+                {
+                    tela2 = "vacio";
+                }
                 grid.getSelectionModel().getSelected().set("detallebordado", tela2);
                 String tela21 = txa_detallecostura.getValueAsString().trim();
+                 if(tela21.length() == 0)
+                {
+                    tela21 = "vacio";
+                }
                 grid.getSelectionModel().getSelected().set("detallecostura", tela21);
                 String tela3 = com_colores.getValueAsString().trim();
+                 if(tela3.length() == 0)
+                {
+                    tela3 = "vacio";
+                }
                 grid.getSelectionModel().getSelected().set("color", tela3);
                 String tela4 = txa_detalle.getValueAsString().trim();
+                 if(tela4.length() == 0)
+                {
+                    tela4 = "vacio";
+                }
                 grid.getSelectionModel().getSelected().set("detalle1", tela4);
 
                 MessageBox.alert("Guardado los Datos en ese Item");

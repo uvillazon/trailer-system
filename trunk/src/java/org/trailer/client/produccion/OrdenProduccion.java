@@ -104,6 +104,7 @@ public class OrdenProduccion extends Panel {
     private String numeroorden;
     private String fecha;
 
+
     public OrdenProduccion(KMenu kmenu, MainEntryPoint panel) {
 
         this.kmenu = kmenu;
@@ -423,6 +424,8 @@ public class OrdenProduccion extends Panel {
                             String numeroorden = Utils.getStringOfJSONObject(jsonObject, "numeroorden");
                             tex_numeroproduccion.setValue(numeroorden);
                             limpiarVentanaVenta();
+                     
+                            //ListarOrdenes
 //                               compra.getGrid().getStore().reload();
                         } else {
 
