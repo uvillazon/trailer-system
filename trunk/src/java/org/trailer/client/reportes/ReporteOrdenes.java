@@ -87,14 +87,14 @@ public class ReporteOrdenes extends Panel {
     private ColumnConfig itemColumn;
     private ColumnConfig cantidadColumn;
     private ColumnConfig estadoopColumn;
-    private ColumnConfig hoy;
+//    private ColumnConfig hoy;
 
     public ReporteOrdenes() {
         this.setClosable(true);
         this.setId("TPfun6003");
         setIconCls("tab-icon");
         setAutoScroll(false);
-        setTitle("Lista Orden P.");
+        setTitle("Reporte Orden");
         onModuleLoad();
     }
 
@@ -106,7 +106,7 @@ public class ReporteOrdenes extends Panel {
         this.setId("TPfun6003");
         setIconCls("tab-icon");
         setAutoScroll(false);
-        setTitle("Lista Orden P.");
+        setTitle("Reporte Orden");
         onModuleLoad();
     }
 
@@ -121,8 +121,8 @@ public class ReporteOrdenes extends Panel {
                     new StringFieldDef("cantidad"),
                     new StringFieldDef("fechaentrega"),
                     new StringFieldDef("estado"),
-                     new StringFieldDef("estadoop"),//
-                     new StringFieldDef("hoy"),
+                    new StringFieldDef("estadoop"),//
+                //                     new StringFieldDef("hoy"),
                 });
         JsonReader reader = new JsonReader(recordDef);
         reader.setRoot("resultado");
@@ -141,95 +141,95 @@ public class ReporteOrdenes extends Panel {
         estadoColumn = new ColumnConfig("Estado Item", "estado", 150, true);
         estadoopColumn = new ColumnConfig("Estado OP", "estadoop", 150, true);
         estadoopColumn = new ColumnConfig("Estado OP", "estadoop", 150, true);
-        hoy = new ColumnConfig("Hoy","hoy",50,true);
+        // hoy = new ColumnConfig("Hoy","hoy",50,true);
 
-         hoy.setRenderer(new Renderer() {
-
-            public String render(Object value, CellMetadata cellMetadata, Record record, int rowIndex, int colNum, Store store) {
-                String res = "";
-                String fecha = record.getAsString("fechaentrega");
-
-
-                Integer dia = new Date().getDate();
-                Integer dia1 = new Date().getDate()-1;
-                Integer dia2 = new Date().getDate()-2;
-                Integer mes = new Date().getMonth();
-                Integer anio = new Date().getYear();
-                String resultado = "";
-//                String mes1 = "";
-                Date FechaHoy = new Date(anio, mes, dia);
-                Date FechaAyer = new Date(anio, mes, dia1);
-                Date FechaPasado = new Date(anio, mes, dia2);
-                Date FechaBase = new Date(fecha);
-               if(FechaBase.compareTo(FechaHoy) == 0)
-               {
-                   resultado =  "RED";
-               }
-               else
-               {
-                    if(FechaBase.compareTo(FechaAyer) == 0)
-                    {
-                        resultado = "YELLOW";
-                    }
-                    else
-                    {
-                        if(FechaBase.compareTo(FechaPasado) == 0)
-                        {
-                            resultado = "GREEN";
-                        }
-                        else
-                        {
-                            resultado =  "ORANGE";
-                        }
-                    }
-
-               }
-                hoy.setCss(resultado);
-                return resultado;
-//                 MessageBox.alert("base"+FechaBase);
-//                 MessageBox.alert("hoy"+FechaHoy);
-//                 MessageBox.alert("ayer"+FechaAyer);
-//                 MessageBox.alert("pasado"+FechaPasado);
-//                if(mes < 10)
-//                {
-//                    mes1 = "0"+mes;
-//                }
-//                else
-//                {
-//                    mes1 = mes.toString();
-//                }
-//                 return mes1;
-//                String hoy = anio.toString()+"-"+mes1+"-"+dia.toString();
-//                String ayer = anio.toString()+"-"+mes1+"-"+dia1.toString();
-//                String pasado = anio.toString()+"-"+mes+"-"+dia2.toString();
-//                 MessageBox.alert("llego"+hoy);
-//                  MessageBox.alert("llego1"+ayer);
-//                   MessageBox.alert("llego2"+pasado);
-//                boolean respuesta = Comparar(fecha,hoy);
-//                boolean respuesta1 = Comparar(fecha,ayer);
-//                boolean respuesta2 = Comparar(fecha,pasado);
-//                if(respuesta)
-//                {
-//                    resultado = "hoy";
-//                }
-//                else
-//                {
-//                    if(respuesta1)
+//         hoy.setRenderer(new Renderer() {
+//
+//            public String render(Object value, CellMetadata cellMetadata, Record record, int rowIndex, int colNum, Store store) {
+//                String res = "";
+//                String fecha = record.getAsString("fechaentrega");
+//
+//
+//                Integer dia = new Date().getDate();
+//                Integer dia1 = new Date().getDate()-1;
+//                Integer dia2 = new Date().getDate()-2;
+//                Integer mes = new Date().getMonth();
+//                Integer anio = new Date().getYear();
+//                String resultado = "";
+////                String mes1 = "";
+//                Date FechaHoy = new Date(anio, mes, dia);
+//                Date FechaAyer = new Date(anio, mes, dia1);
+//                Date FechaPasado = new Date(anio, mes, dia2);
+//                Date FechaBase = new Date(fecha);
+//               if(FechaBase.compareTo(FechaHoy) == 0)
+//               {
+//                   resultado =  "RED";
+//               }
+//               else
+//               {
+//                    if(FechaBase.compareTo(FechaAyer) == 0)
 //                    {
-//                        resultado = "manana";
+//                        resultado = "YELLOW";
 //                    }
 //                    else
 //                    {
-//                        if(respuesta2)
+//                        if(FechaBase.compareTo(FechaPasado) == 0)
 //                        {
-//                            resultado = "pasado";
+//                            resultado = "GREEN";
+//                        }
+//                        else
+//                        {
+//                            resultado =  "ORANGE";
 //                        }
 //                    }
 //
-//                }
+//               }
+//                hoy.setCss(resultado);
 //                return resultado;
-            }
-        });
+////                 MessageBox.alert("base"+FechaBase);
+////                 MessageBox.alert("hoy"+FechaHoy);
+////                 MessageBox.alert("ayer"+FechaAyer);
+////                 MessageBox.alert("pasado"+FechaPasado);
+////                if(mes < 10)
+////                {
+////                    mes1 = "0"+mes;
+////                }
+////                else
+////                {
+////                    mes1 = mes.toString();
+////                }
+////                 return mes1;
+////                String hoy = anio.toString()+"-"+mes1+"-"+dia.toString();
+////                String ayer = anio.toString()+"-"+mes1+"-"+dia1.toString();
+////                String pasado = anio.toString()+"-"+mes+"-"+dia2.toString();
+////                 MessageBox.alert("llego"+hoy);
+////                  MessageBox.alert("llego1"+ayer);
+////                   MessageBox.alert("llego2"+pasado);
+////                boolean respuesta = Comparar(fecha,hoy);
+////                boolean respuesta1 = Comparar(fecha,ayer);
+////                boolean respuesta2 = Comparar(fecha,pasado);
+////                if(respuesta)
+////                {
+////                    resultado = "hoy";
+////                }
+////                else
+////                {
+////                    if(respuesta1)
+////                    {
+////                        resultado = "manana";
+////                    }
+////                    else
+////                    {
+////                        if(respuesta2)
+////                        {
+////                            resultado = "pasado";
+////                        }
+////                    }
+////
+////                }
+////                return resultado;
+//            }
+//        });
 //        hoy.setRenderer(new Renderer() {
 //
 //            public String render(Object value, CellMetadata cellMetadata, Record record, int rowIndex, int colNum, Store store) {
@@ -247,19 +247,18 @@ public class ReporteOrdenes extends Panel {
                     cantidadColumn,
                     fechaColumn,
                     estadoColumn,
-                    estadoopColumn,
-                    hoy
+                    estadoopColumn
+//                    hoy
 //                    observacionColumn,
-
                 };
 
         columnModel = new ColumnModel(columns);
 
         grid = new EditorGridPanel();
-        grid.setId("grid-lista-OP");
+        grid.setId("grid-Reporte-op");
         grid.setWidth(ANCHO);
         grid.setHeight(ALTO);
-        grid.setTitle("Orden Produccion");
+        grid.setTitle("Reporte Orden Produccion");
         grid.setStore(store);
         grid.setColumnModel(columnModel);
         grid.setTrackMouseOver(true);
@@ -275,22 +274,50 @@ public class ReporteOrdenes extends Panel {
             @Override
             public String getRowClass(Record record, int index, RowParams rowParams, Store store) {
 
-                String estado = record.getAsString("estado");
-                //MessageBox.alert("llego aqui"+estado);
-                if (estado.equals("completado") == true) {
-                    return "GREEN";
+                String fecha = record.getAsString("fechaentrega");
 
-                }
-                if (estado.equals("pendiente") == true) {
-                    return "YELLOW";
+
+                Integer dia = new Date().getDate();
+                Integer dia1 = new Date().getDate() + 1;
+                Integer dia2 = new Date().getDate() + 2;
+                Integer mes = new Date().getMonth() + 1;
+
+                Integer anio = new Date().getYear() + 1900;
+
+                String resultado[] = fecha.split("-");
+                Integer anio12 = Integer.parseInt(resultado[0]);
+                Integer mes12 = Integer.parseInt(resultado[1]);
+                Integer dias12 = Integer.parseInt(resultado[2]);
+
+                String mes1 = "";
+                if (mes < 10) {
+                    mes1 = "0" + mes.toString();
                 } else {
-                    return "NONE";
+                    mes1 = mes.toString();
                 }
-
+//                 return mes1;
+                String hoy = anio.toString() + "-" + mes1 + "-" + dia.toString();
+                String ayer = anio.toString() + "-" + mes1 + "-" + dia1.toString();
+                String pasado = anio.toString() + "-" + mes1 + "-" + dia2.toString();
+                // MessageBox.alert("fecha"+fecha+"-llego-"+hoy+"-ayer-"+ayer+"-pasado-"+pasado);
+//                  MessageBox.alert("llego1"+ayer);
+                //   MessageBox.alert("llego2"+pasado);
+                String cadena = "";
+                if (fecha.compareToIgnoreCase(hoy) == 0) {
+                    cadena = "GREEN";
+                } else {
+                    if (fecha.compareToIgnoreCase(ayer) == 0) {
+                        cadena = "YELLOW";
+                    } else {
+                        if (fecha.compareToIgnoreCase(pasado)==0) {
+                            cadena = "GREEN";
+                        } else {
+                            cadena = "ORANGE";
+                        }
+                    }
+                }
+                return cadena;
             }
-
-
-
         });
         grid.addGridRowListener(new GridRowListenerAdapter() {
 
@@ -303,19 +330,18 @@ public class ReporteOrdenes extends Panel {
                 String enlTemp = "funcion=reporteOrdenHTML&idordenproduccion=" + selecionado;
                 verReporte(enlTemp);
             }
-
         });
 
-        editarOrden = new ToolbarButton("Editar Orden");
+        editarOrden = new ToolbarButton("Imprimir Fecha Entrega");
         editarOrden.setEnableToggle(true);
         QuickTipsConfig tipsConfig = new QuickTipsConfig();
-        tipsConfig.setText("Editar Orden");
+        tipsConfig.setText("Imprimir Fecha Entrega");
         editarOrden.setTooltip(tipsConfig);
 
-        eliminarOrden = new ToolbarButton("Eliminar Orden");
+        eliminarOrden = new ToolbarButton("Imprimir Estado Orden");
         eliminarOrden.setEnableToggle(true);
         QuickTipsConfig tipsConfig2 = new QuickTipsConfig();
-        tipsConfig2.setText("Eliminar Orden");
+        tipsConfig2.setText("Imprimir Estado Orden");
         eliminarOrden.setTooltip(tipsConfig2);
 
 
@@ -357,20 +383,17 @@ public class ReporteOrdenes extends Panel {
         return grid;
     }
 
-    public boolean Comparar(String base,String hoy)
-    {
+    public boolean Comparar(String base, String hoy) {
         boolean res = true;
-        if(base.compareTo(hoy) == 0)
-        {
+        if (base.compareTo(hoy) == 0) {
             MessageBox.alert("entro");
             res = true;
-        }
-        else
-        {
+        } else {
             res = false;
         }
         return res;
     }
+
     public void setGrid(GridPanel grid) {
         this.grid = grid;
     }
@@ -420,7 +443,7 @@ public class ReporteOrdenes extends Panel {
 
 //                                formulario = null;
 //                                formulario = new OrdenProduccion(clientes, productos, responsables, empresas, telas, colores, numeroproduccion, orden, detalles);
-  //                              kmenu.seleccionarOpcion(null, "fun4000", e, formulario);
+                            //                              kmenu.seleccionarOpcion(null, "fun4000", e, formulario);
 
 
                             }
@@ -449,50 +472,51 @@ public class ReporteOrdenes extends Panel {
 
             @Override
             public void onClick(Button button, EventObject e) {
-                Record[] records = cbSelectionModel.getSelections();
-                if (records.length == 1) {
-                    selecionado = records[0].getAsString("idordenproduccion");
-                    MessageBox.confirm("Eliminar Orden Produccion", "Realmente desea eliminar esta Orden??", new MessageBox.ConfirmCallback() {
-
-                        public void execute(String btnID) {
-                            if (btnID.equalsIgnoreCase("yes")) {
-                                //eliminar
-                                String enlace = "php/OrdenProduccion.php?funcion=EliminarOrdenProduccion&idordenproduccion=" + selecionado;
-                                Utils.setErrorPrincipal("Eliminando el Compra", "cargar");
-                                final Conector conec = new Conector(enlace, false);
-                                try {
-                                    conec.getRequestBuilder().sendRequest("asdf", new RequestCallback() {
-
-                                        public void onResponseReceived(Request request, Response response) {
-                                            String data = response.getText();
-                                            JSONValue jsonValue = JSONParser.parse(data);
-                                            JSONObject jsonObject;
-                                            if ((jsonObject = jsonValue.isObject()) != null) {
-                                                String errorR = Utils.getStringOfJSONObject(jsonObject, "error");
-                                                String mensajeR = Utils.getStringOfJSONObject(jsonObject, "mensaje");
-                                                if (errorR.equalsIgnoreCase("true")) {
-                                                    Utils.setErrorPrincipal(mensajeR, "mensaje");
-                                                    reload();
-                                                } else {
-                                                    Utils.setErrorPrincipal(mensajeR, "error");
-                                                }
-                                            }
-                                        }
-
-                                        public void onError(Request request, Throwable exception) {
-                                            Utils.setErrorPrincipal("Ocurrio un error al conectar con el servidor", "error");
-                                        }
-                                    });
-                                } catch (RequestException ex) {
-                                    Utils.setErrorPrincipal("Ocurrio un error al conectar con el servidor", "error");
-                                }
-                            }
-                        }
-                    });
-                } else {
-                    MessageBox.alert("No hay Compra selecionado  y/o selecciono mas de uno.");
-                }
-                eliminarOrden.setPressed(false);
+                MessageBox.alert("Generando Reporte............");
+//                Record[] records = cbSelectionModel.getSelections();
+//                if (records.length == 1) {
+//                    selecionado = records[0].getAsString("idordenproduccion");
+//                    MessageBox.confirm("Eliminar Orden Produccion", "Realmente desea eliminar esta Orden??", new MessageBox.ConfirmCallback() {
+//
+//                        public void execute(String btnID) {
+//                            if (btnID.equalsIgnoreCase("yes")) {
+//                                //eliminar
+//                                String enlace = "php/OrdenProduccion.php?funcion=EliminarOrdenProduccion&idordenproduccion=" + selecionado;
+//                                Utils.setErrorPrincipal("Eliminando el Compra", "cargar");
+//                                final Conector conec = new Conector(enlace, false);
+//                                try {
+//                                    conec.getRequestBuilder().sendRequest("asdf", new RequestCallback() {
+//
+//                                        public void onResponseReceived(Request request, Response response) {
+//                                            String data = response.getText();
+//                                            JSONValue jsonValue = JSONParser.parse(data);
+//                                            JSONObject jsonObject;
+//                                            if ((jsonObject = jsonValue.isObject()) != null) {
+//                                                String errorR = Utils.getStringOfJSONObject(jsonObject, "error");
+//                                                String mensajeR = Utils.getStringOfJSONObject(jsonObject, "mensaje");
+//                                                if (errorR.equalsIgnoreCase("true")) {
+//                                                    Utils.setErrorPrincipal(mensajeR, "mensaje");
+//                                                    reload();
+//                                                } else {
+//                                                    Utils.setErrorPrincipal(mensajeR, "error");
+//                                                }
+//                                            }
+//                                        }
+//
+//                                        public void onError(Request request, Throwable exception) {
+//                                            Utils.setErrorPrincipal("Ocurrio un error al conectar con el servidor", "error");
+//                                        }
+//                                    });
+//                                } catch (RequestException ex) {
+//                                    Utils.setErrorPrincipal("Ocurrio un error al conectar con el servidor", "error");
+//                                }
+//                            }
+//                        }
+//                    });
+//                } else {
+//                    MessageBox.alert("No hay Compra selecionado  y/o selecciono mas de uno.");
+//                }
+//                eliminarOrden.setPressed(false);
             }
         });
         //**************************************************
@@ -514,15 +538,15 @@ public class ReporteOrdenes extends Panel {
 
                     @Override
                     public void onClick(Button button, EventObject e) {
-                        Record[] records = cbSelectionModel.getSelections();
-                        if (records.length == 1) {
-                            String idorden = records[0].getAsString("idordenproduccion");
-                            cargarDatosEditarCompra(idorden);
-                        } else {
-
-                            Utils.setErrorPrincipal("Por favor seleccione una compra para editar", "error");
-                        }
-
+//                        Record[] records = cbSelectionModel.getSelections();
+//                        if (records.length == 1) {
+//                            String idorden = records[0].getAsString("idordenproduccion");
+//                            cargarDatosEditarCompra(idorden);
+//                        } else {
+//
+//                            Utils.setErrorPrincipal("Por favor seleccione una compra para editar", "error");
+//                        }
+                        MessageBox.alert("Generando Reporte................");
                     }
                 });
         detalle.addListener(
