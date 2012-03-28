@@ -85,9 +85,10 @@ public class ListarOrdenes extends Panel {
     private BaseColumnConfig[] columns;
     ColumnModel columnModel;
     private ColumnConfig itemColumn;
+    private ColumnConfig talla;
     private ColumnConfig cantidadColumn;
     private ColumnConfig estadoopColumn;
-    private ColumnConfig hoy;
+   // private ColumnConfig hoy;
 
     public ListarOrdenes() {
         this.setClosable(true);
@@ -118,11 +119,12 @@ public class ListarOrdenes extends Panel {
                     new StringFieldDef("numeroorden"),
                     new StringFieldDef("cliente"),
                     new StringFieldDef("item"),
+                    new StringFieldDef("talla"),
                     new StringFieldDef("cantidad"),
                     new StringFieldDef("fechaentrega"),
                     new StringFieldDef("estado"),
                      new StringFieldDef("estadoop"),//
-                     new StringFieldDef("hoy"),
+//                     new StringFieldDef("hoy"),
                 });
         JsonReader reader = new JsonReader(recordDef);
         reader.setRoot("resultado");
@@ -135,101 +137,16 @@ public class ListarOrdenes extends Panel {
         ordenColumn.setId("expandible");
 
         clienteColumn = new ColumnConfig("Cliente/Empresa", "cliente", 200, true);
-        cantidadColumn = new ColumnConfig("Cantidad", "cantidad", 200, true);
+        cantidadColumn = new ColumnConfig("Cantidad", "cantidad", 80, true);
         itemColumn = new ColumnConfig("Item", "item", 200, true);
+        talla = new ColumnConfig("Talla","talla",80,true);
         fechaColumn = new ColumnConfig("Fecha Entrega", "fechaentrega", 200, true);
         estadoColumn = new ColumnConfig("Estado Item", "estado", 150, true);
         estadoopColumn = new ColumnConfig("Estado OP", "estadoop", 150, true);
         estadoopColumn = new ColumnConfig("Estado OP", "estadoop", 150, true);
-        hoy = new ColumnConfig("Hoy","hoy",50,true);
+       // hoy = new ColumnConfig("Hoy","hoy",50,true);
         
-         hoy.setRenderer(new Renderer() {
-
-            public String render(Object value, CellMetadata cellMetadata, Record record, int rowIndex, int colNum, Store store) {
-                String res = "";
-                String fecha = record.getAsString("fechaentrega");
-
-
-                Integer dia = new Date().getDate();
-                Integer dia1 = new Date().getDate()-1;
-                Integer dia2 = new Date().getDate()-2;
-                Integer mes = new Date().getMonth();
-                Integer anio = new Date().getYear();
-                String resultado = "";
-//                String mes1 = "";
-                Date FechaHoy = new Date(anio, mes, dia);
-                Date FechaAyer = new Date(anio, mes, dia1);
-                Date FechaPasado = new Date(anio, mes, dia2);
-                Date FechaBase = new Date(fecha);
-               if(FechaBase.compareTo(FechaHoy) == 0)
-               {
-                   resultado =  "RED";
-               }
-               else
-               {
-                    if(FechaBase.compareTo(FechaAyer) == 0)
-                    {
-                        resultado = "YELLOW";
-                    }
-                    else
-                    {
-                        if(FechaBase.compareTo(FechaPasado) == 0)
-                        {
-                            resultado = "GREEN";
-                        }
-                        else
-                        {
-                            resultado =  "ORANGE";
-                        }
-                    }
-
-               }
-                hoy.setCss(resultado);
-                return resultado;
-//                 MessageBox.alert("base"+FechaBase);
-//                 MessageBox.alert("hoy"+FechaHoy);
-//                 MessageBox.alert("ayer"+FechaAyer);
-//                 MessageBox.alert("pasado"+FechaPasado);
-//                if(mes < 10)
-//                {
-//                    mes1 = "0"+mes;
-//                }
-//                else
-//                {
-//                    mes1 = mes.toString();
-//                }
-//                 return mes1;
-//                String hoy = anio.toString()+"-"+mes1+"-"+dia.toString();
-//                String ayer = anio.toString()+"-"+mes1+"-"+dia1.toString();
-//                String pasado = anio.toString()+"-"+mes+"-"+dia2.toString();
-//                 MessageBox.alert("llego"+hoy);
-//                  MessageBox.alert("llego1"+ayer);
-//                   MessageBox.alert("llego2"+pasado);
-//                boolean respuesta = Comparar(fecha,hoy);
-//                boolean respuesta1 = Comparar(fecha,ayer);
-//                boolean respuesta2 = Comparar(fecha,pasado);
-//                if(respuesta)
-//                {
-//                    resultado = "hoy";
-//                }
-//                else
-//                {
-//                    if(respuesta1)
-//                    {
-//                        resultado = "manana";
-//                    }
-//                    else
-//                    {
-//                        if(respuesta2)
-//                        {
-//                            resultado = "pasado";
-//                        }
-//                    }
-//
-//                }
-//                return resultado;
-            }
-        });
+      
 //        hoy.setRenderer(new Renderer() {
 //
 //            public String render(Object value, CellMetadata cellMetadata, Record record, int rowIndex, int colNum, Store store) {
@@ -244,11 +161,12 @@ public class ListarOrdenes extends Panel {
                     ordenColumn,
                     clienteColumn,
                     itemColumn,
+                    talla,
                     cantidadColumn,
                     fechaColumn,
                     estadoColumn,
-                    estadoopColumn,
-                    hoy
+                    estadoopColumn
+                   
 //                    observacionColumn,
 
                 };

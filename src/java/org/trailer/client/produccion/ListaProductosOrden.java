@@ -61,10 +61,12 @@ public class ListaProductosOrden {
     private final int ALTO = Utils.getScreenHeight() - 270;
     private ToolbarButton eliminarProducto;
     private ToolbarButton detalleProducto;
+    private ToolbarButton QuitarGrilla;
     protected ExtElement ext_element;
     private CheckboxSelectionModel cbSelectionModel;
     private Store store;
     private ColumnConfig idColumn;
+    private ColumnConfig idProducto;
     private BaseColumnConfig[] columns;
     private ColumnModel columnModel;
     protected String buscaCodigo;
@@ -80,7 +82,7 @@ public class ListaProductosOrden {
     private ColumnConfig punitColumn;
     private ColumnConfig totalColumn;
     private ColumnConfig detalleColumn;
-    String[] nombreComlumns = {"id", "detalle", "unidad", "cantidad", "preciounitario", "preciototal", "tela", "color", "detalle1", "detallebordado", "detallecostura", "estado"};
+    String[] nombreComlumns = {"id", "detalle", "unidad", "cantidad", "preciounitario", "preciototal", "tela", "color", "detalle1", "detallebordado", "detallecostura", "estado","idproducto"};
     private RecordDef recordDef;
     private TextField tex_detalle;
     private ComboBox com_telas;
@@ -133,7 +135,7 @@ public class ListaProductosOrden {
         dataProxy = new ScriptTagProxy("");
         recordDef = new RecordDef(new FieldDef[]{
                     new StringFieldDef(nombreComlumns[0]),
-                    new StringFieldDef(nombreComlumns[1]),
+                    new StringFieldDef(nombreComlumns[1]),//otro
                     new StringFieldDef(nombreComlumns[2]),
                     new StringFieldDef(nombreComlumns[3]),
                     new StringFieldDef(nombreComlumns[4]),
@@ -143,13 +145,16 @@ public class ListaProductosOrden {
                     new StringFieldDef(nombreComlumns[8]),
                     new StringFieldDef(nombreComlumns[9]),
                     new StringFieldDef(nombreComlumns[10]),
-                    new StringFieldDef(nombreComlumns[11])});
+                    new StringFieldDef(nombreComlumns[11])
+                   // new StringFieldDef(nombreComlumns[12])
+        });
         reader = new JsonReader(recordDef);
         reader.setRoot("resultado");
         reader.setTotalProperty("totalCount");
         store = new Store(dataProxy, reader, true);
 
-        idColumn = new ColumnConfig("Id Producto", nombreComlumns[0], (ANCHO / 8), false);
+        idColumn = new ColumnConfig("Id", nombreComlumns[0], 100, false,null,"id");
+        //idProducto = new ColumnConfig("Producto",nombreComlumns[12],100,false);
         detalleColumn = new ColumnConfig("Detalle", nombreComlumns[1], 200, false, null, "detalle");
         cantidadColumn = new ColumnConfig("Cantidad", nombreComlumns[3], 100, false);
         tallaColumn = new ColumnConfig("Talla", nombreComlumns[2], 100, false);
@@ -167,6 +172,7 @@ public class ListaProductosOrden {
                     "4",
                     "6",
                     "8", "10", "12", "14",
+                    "36","38","40","42","44","46","48","50","52","54",
                     "XS",
                     "S",
                     "M",
@@ -187,10 +193,14 @@ public class ListaProductosOrden {
         num_field2.setAllowBlank(false);
         num_field2.setAllowNegative(false);
         num_field2.setSelectOnFocus(true);
+
+//        TextField texto = new TextField();
+//        texto.setAllowBlank(false);
+//        texto.setSelectOnFocus(true);
         //num_field2.setMaxValue(1000);
 
 
-//        precioBsColumn.setEditor(new GridEditor(num_field1));
+        //idColumn.setEditor(new GridEditor(texto));
         cantidadColumn.setEditor(new GridEditor(num_field1));
         punitColumn.setEditor(new GridEditor(num_field2));
 
@@ -198,6 +208,8 @@ public class ListaProductosOrden {
         cbSelectionModel = new CheckboxSelectionModel();
         columns = new BaseColumnConfig[]{new RowNumberingColumnConfig(),
                     new CheckboxColumnConfig(cbSelectionModel),
+                  //  idColumn,
+                   // idProducto,
                     detalleColumn,
                     tallaColumn,
                     cantidadColumn,
@@ -241,17 +253,22 @@ public class ListaProductosOrden {
             }
         });
 
-        eliminarProducto = new ToolbarButton("Quitar");
+        eliminarProducto = new ToolbarButton("Eliminar");
         eliminarProducto.setEnableToggle(true);
         QuickTipsConfig tipsConfig2 = new QuickTipsConfig();
         tipsConfig2.setText("Quitar producto(s)");
         //tipsConfig.setTitle("Tip Title");
         eliminarProducto.setTooltip(tipsConfig2);
 
+        QuitarGrilla = new ToolbarButton("Quitar");
+        QuitarGrilla.setEnableToggle(true);
+        QuickTipsConfig config1 = new QuickTipsConfig();
+        config1.setText("Quitar Producto");
+
         detalleProducto = new ToolbarButton("Detalle");
         detalleProducto.setEnableToggle(true);
         QuickTipsConfig tipsConfig1 = new QuickTipsConfig();
-        tipsConfig1.setText("Quitar producto(s)");
+        tipsConfig1.setText("Detalle producto(s)");
         //tipsConfig.setTitle("Tip Title");
         detalleProducto.setTooltip(tipsConfig1);
 
@@ -260,8 +277,11 @@ public class ListaProductosOrden {
         pagingToolbar.setDisplayInfo(false);
         pagingToolbar.setDisplayMsg("Mostrando {0} - {1} de {2}");
         pagingToolbar.setEmptyMsg("No topics to display");
+
+        pagingToolbar.addButton(QuitarGrilla);
         pagingToolbar.addSeparator();
         pagingToolbar.addButton(eliminarProducto);
+         pagingToolbar.addSeparator();
         pagingToolbar.addButton(detalleProducto);
 
         grid.setBottomToolbar(pagingToolbar);
@@ -271,7 +291,7 @@ public class ListaProductosOrden {
 //        aniadirListenersBuscadoresText();
         panel1.add(tex_detalle);
         panel1.add(com_telas);
-        panel1.add(com_colores);
+       // panel1.add(com_colores);
         panel1.add(txa_detalle);
         panel1.add(txa_detallebordado);
         panel1.add(txa_detallecostura);
@@ -306,21 +326,21 @@ public class ListaProductosOrden {
 
 
 
-        com_colores.setValueField("id");
-        com_colores.setDisplayField("nombre");
-        com_colores.setForceSelection(true);
-        com_colores.setMinChars(1);
-        com_colores.setMode(ComboBox.LOCAL);
-        com_colores.setTriggerAction(ComboBox.ALL);
-        com_colores.setEmptyText("Seleccione un Color");
-        com_colores.setLoadingText("Buscando");
-        com_colores.setTypeAhead(true);
-        com_colores.setSelectOnFocus(true);
-        com_colores.setHideTrigger(true);
-        com_colores.setReadOnly(false);
-        SimpleStore marcaStore = new SimpleStore(new String[]{"id", "nombre"}, colores);
-        marcaStore.load();
-        com_colores.setStore(marcaStore);
+//        com_colores.setValueField("id");
+//        com_colores.setDisplayField("nombre");
+//        com_colores.setForceSelection(true);
+//        com_colores.setMinChars(1);
+//        com_colores.setMode(ComboBox.LOCAL);
+//        com_colores.setTriggerAction(ComboBox.ALL);
+//        com_colores.setEmptyText("Seleccione un Color");
+//        com_colores.setLoadingText("Buscando");
+//        com_colores.setTypeAhead(true);
+//        com_colores.setSelectOnFocus(true);
+//        com_colores.setHideTrigger(true);
+//        com_colores.setReadOnly(false);
+//        SimpleStore marcaStore = new SimpleStore(new String[]{"id", "nombre"}, colores);
+//        marcaStore.load();
+//        com_colores.setStore(marcaStore);
 
 
 
@@ -421,6 +441,30 @@ public class ListaProductosOrden {
                     grid.stopEditing();
                     MessageBox.alert("aqui debe entrar el reporte o detalle del producto");
                     grid.startEditing(0, 0);
+                } else {
+                    MessageBox.alert("No hay producto selecionado para eliminar y/o selecciono mas de uno.");
+                }
+                detalleProducto.setPressed(false);
+            }
+        });
+
+
+        //QUITAR PRODUCTO DE LA GRILLA
+        QuitarGrilla.addListener(new ButtonListenerAdapter() {
+
+            private boolean procederAEliminar;
+            int repeat = 0;
+
+            @Override
+            public void onClick(Button button, EventObject e) {
+                Record[] records = cbSelectionModel.getSelections();
+                if (records.length == 1) {
+                    selecionado = records[0].getAsString("id");
+
+                  grid.stopEditing();
+                  store.remove(cbSelectionModel.getSelected());
+                  grid.startEditing(0, 0);
+
                 } else {
                     MessageBox.alert("No hay producto selecionado para eliminar y/o selecciono mas de uno.");
                 }
@@ -598,7 +642,7 @@ public class ListaProductosOrden {
             }
         });
         but_duplicar.addListener(new ButtonListenerAdapter() {
-
+            
             @Override
             public void onClick(Button button, EventObject e) {
 
@@ -606,12 +650,24 @@ public class ListaProductosOrden {
 //                    lista.getGrid().stopEditing();
 //                    lista.getGrid().getStore().insert(0, registroCompra);
 //                    lista.getGrid().startEditing(0, 0);
+//                Record b = grid.getSelectionModel().getSelected().set("idProducto", "nuevo");
+                 String tela4 = "a";
                 Record a = grid.getSelectionModel().getSelected().copy();
+                //Object otro[] =   new Object[]{idProducto, nombre, "M", 1, 0, 0, "", "", "", "", "", ""});
 //                 grid.getStore().cl
+               String ides =  a.getAsString("id");
+                grid.startEditing(0, 0);
+                a.set("id", tela4+ides);
                 grid.stopEditing();
+                //a.set("idProducto", "otro");
                 grid.getStore().insert(0, a);
                 grid.startEditing(0, 0);
+            //    MessageBox.alert("id es"+a.getId().toString());
+               
+
                 MessageBox.alert("Duplicar los Datos en este Item");
+               
+                
 
             }
         });
@@ -641,7 +697,7 @@ public class ListaProductosOrden {
     public void LimpiarPanelAdicioanl() {
         tex_detalle.setValue("");
         com_telas.clearValue();
-        com_colores.clearValue();
+      //  com_colores.clearValue();
         com_estado.clearValue();
         txa_detalle.setValue("");
         txa_detallebordado.setValue("");
