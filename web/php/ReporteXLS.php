@@ -2,7 +2,7 @@
 header("Content-type: application/vnd.ms-excel");
 $ar = "Reporte";
 header("Content-Disposition: attachment; filename=$ar.xls");
-session_name("Selkis");
+session_name("trailer");
 session_start();
 include("impl/Ciudad.php");
 include("impl/ListarUsuario.php");
