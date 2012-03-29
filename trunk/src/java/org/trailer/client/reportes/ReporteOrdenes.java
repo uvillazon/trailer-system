@@ -302,20 +302,67 @@ public class ReporteOrdenes extends Panel {
                 // MessageBox.alert("fecha"+fecha+"-llego-"+hoy+"-ayer-"+ayer+"-pasado-"+pasado);
 //                  MessageBox.alert("llego1"+ayer);
                 //   MessageBox.alert("llego2"+pasado);
+                int contador = 0;
+                int contador1 = 0;
+                int contador2 = 0;
+
+                for (int i = 0; i < fecha.length(); i++) {
+                    char sistema = hoy.charAt(i);
+                    char base = fecha.charAt(i);
+                    char sistema1 = ayer.charAt(i);
+                    char sistema2 = pasado.charAt(i);
+                    if(sistema == base)
+                    {
+                        contador++;
+                    }
+                    if(sistema1 == base)
+                    {
+                        contador1++;
+                    }
+                    if(sistema2 == base)
+                    {
+                        contador2++;
+                    }
+
+                }
                 String cadena = "";
-                if (fecha.compareToIgnoreCase(hoy) == 0) {
-                    cadena = "GREEN";
-                } else {
-                    if (fecha.compareToIgnoreCase(ayer) == 0) {
+                if(contador == fecha.length())
+                {
+                    cadena = "RED";
+                }
+                else
+                {
+                    if(contador1 == fecha.length())
+                    {
                         cadena = "YELLOW";
-                    } else {
-                        if (fecha.compareToIgnoreCase(pasado)==0) {
+                    }
+                    else
+                    {
+                        if(contador2 == fecha.length())
+                        {
                             cadena = "GREEN";
-                        } else {
-                            cadena = "ORANGE";
+                        }
+                        else
+                        {
+                            cadena = "DARK_GRAY";
                         }
                     }
                 }
+
+
+//                if (fecha.compareToIgnoreCase(hoy) == 0) {
+//                    cadena = "GREEN";
+//                } else {
+//                    if (fecha.compareToIgnoreCase(ayer) == 0) {
+//                        cadena = "YELLOW";
+//                    } else {
+//                        if (fecha.compareToIgnoreCase(pasado)==0) {
+//                            cadena = "GREEN";
+//                        } else {
+//                            cadena = "ORANGE";
+//                        }
+//                    }
+//                }
                 return cadena;
             }
         });
