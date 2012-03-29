@@ -126,7 +126,8 @@ SELECT
   `det`.estado,
 `ord`.estado AS estadoop,
    ord.cliente AS cliente,
-   CONCAT(`det`.`detalle`, ' ',  `det`.`talla`) AS item,
+    `det`.`detalle`  AS item,
+ `det`.`talla`,
   `det`.`cantidad`
 FROM
   ordenproduccion `ord` ,`detalleorden` `det` WHERE `ord`.`idordenproduccion` = `det`.`idordenproduccion` $order
@@ -146,14 +147,15 @@ SELECT
   `det`.estado,
 `ord`.estado AS estadoop,
   ord.cliente AS cliente,
-   CONCAT(`det`.`detalle`, ' ',  `det`.`talla`) AS item,
+    `det`.`detalle  AS item,
+`det`.`talla`,
   `det`.`cantidad`
 FROM
   ordenproduccion `ord` ,`detalleorden` `det` WHERE `ord`.`idordenproduccion` = `det`.`idordenproduccion` AND $where $order
 ";
     }
 
-//            echo $sql;
+    //   echo $sql;
     if($link=new BD)
     {
         if($link->conectar())
@@ -426,7 +428,7 @@ WHERE
     $detallebordado = $orden->detallebordado;
     $detallecostura = $orden->detallecostura;
     $sql[] = getSqlNewOrdenproduccion($idordenproduccion, $numeroorden, $idcliente, $idempresa, $idresponsable, $fechaentrega, $fecharecepcion, $montototal, $montoapagar, $saldo, $observacion, $estado, $numero, $idusuario, $cliente, $numerorecibo, $return);
-    
+
     //    $sql[] = getSqlNewOrdenproduccion($idordenproduccion, $numeroorden, $idcliente, $idempresa, $idresponsable, $fechaentrega,$fecharecepcion,  $montototal, $montoapagar, $saldo, $observacion, $estado, $numero, $idusuario,$cliente,$detallecostura, $detallebordado, $return);
     $sql[] = getSqlNewCredito($idordenproduccion, $idcliente, $idempresa, $montototal, $saldo, $observacion, $idresponsable, $fecharecepcion, $return);
     $numerocA = findUltimoID("detallecredito", "numero", true);
@@ -469,7 +471,7 @@ WHERE
         print($output);
         exit;
     }
-         //       MostrarConsulta($sql);
+    //  MostrarConsulta($sql);
     if(ejecutarConsultaSQLBeginCommit($sql)) {
         //        for($k=0;$k<count($movimiento);$k++){
         //            //            echo $movimiento[$j]['idproducto'];
@@ -635,13 +637,14 @@ WHERE
         $numerodetalleA = findUltimoID("detalleorden", "numero", true);
         $numerodetalle = $numerodetalleA['resultado']+1;
 
+
         for($i=0;$i<count($detalles);$i++){
             $detalle1 = $detalles[$i];
             $iddetalleop = $detalle1->id;
             $id1 = substr($iddetalleop,0,3);
 
-            //        echo "hola".$id;
-            //        exit();
+            // echo "hola".$id1;
+            //exit();
             $detalle = $detalle1->detalle;
             $talla = $detalle1->unidad;
             $preciounitario = $detalle1->preciounitario;
@@ -653,13 +656,26 @@ WHERE
             $detallebordado = $detalle1->detallebordado;
             $detallecostura = $detalle1->detallecostura;
             $estadoi = $detalle1->estado;
-            if($id1 =="deo"){
+            $ie = substr($id1, 0, 1);
+            // echo $id1;
+            $id2 = substr($iddetalleop, 1);
+            //            exit();
+            if($ie !="a"){
                 $sql[] = getSqlUpdateDetalleorden($iddetalleop, $id, $idproducto, $detalle, $talla, $preciounitario, $cantidad, $preciototal, $numero, $cantidad1, $idtela, $idcolor, $detalleitem, $detallebordado, $detallecostura, $estadoi, $return);
 
             }
             else{
+
                 $iddetalleorden = "deo-".$numerodetalle;
-                $sql[] = getSqlNewDetalleorden($iddetalleorden, $id, $iddetalleop, $detalle, $talla, $preciounitario, $cantidad, $preciototal, $numerodetalle, $cantidad, $idtela, $idcolor, $detalleitem, $detallebordado, $detallecostura, $estadoi, $return);
+                $sqla = "SELECT
+  det.idproducto
+FROM
+  detalleorden det
+WHERE
+  det.iddetalleorden = '$id2'";
+                $idproducto1 = findBySqlReturnCampoUnique($sqla, true, true, "idproducto");
+                $idproducto12 = $idproducto1['resultado'];
+                $sql[] = getSqlNewDetalleorden($iddetalleorden, $id, $idproducto12, $detalle, $talla, $preciounitario, $cantidad, $preciototal, $numerodetalle, $cantidad, $idtela, $idcolor, $detalleitem, $detallebordado, $detallecostura, $estadoi, $return);
                 //            $sql[] = getSqlNewDetalleorden($iddetalleorden, $idordenproduccion, $id, $detalle, $unidad, $preciounitario, $cantidad, $preciototal, $numerodetalle, $cantidad, $return);
                 $numerodetalle++;
             }
@@ -676,7 +692,7 @@ WHERE
         print($output);
         exit;
     }
-    //            MostrarConsulta($sql);exit();
+//    MostrarConsulta($sql);exit();
     if(ejecutarConsultaSQLBeginCommit($sql)) {
         //        for($k=0;$k<count($movimiento);$k++){
         //            //            echo $movimiento[$j]['idproducto'];
@@ -916,7 +932,8 @@ SELECT
   det.detalleitem AS detalle1,
   det.detallebordado,
   det.detallecostura,
-  det.estado
+  det.estado,
+  det.idproducto
 FROM
   detalleorden det
 WHERE

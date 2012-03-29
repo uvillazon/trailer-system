@@ -36,11 +36,11 @@ if(permitido("fun1008", $_SESSION['codigo'])==true)
         if($_GET['buscarempresa'] != null)
         {
             if($band == false) {
-                $extras .= "  emp.nombre LIKE '%".$_GET['buscarapellido']."%' ";
+                $extras .= "  emp.nombre LIKE '%".$_GET['buscarempresa']."%' ";
                 $band = true;
             }
             else {
-                $extras .= " AND  emp.nombre LIKE '%".$_GET['buscarapellido']."%'";
+                $extras .= " AND  emp.nombre LIKE '%".$_GET['buscarempresa']."%'";
             }
         }
 

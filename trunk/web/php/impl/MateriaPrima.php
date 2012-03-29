@@ -949,14 +949,15 @@ function GuardarEditarMateriaPrima($callback, $_dc, $idmateriaprima, $return = f
     $caracteristica = $_GET['caracteristica'];
     $calidad = $_GET['calidad'];
     $estado = $_GET['estado'];
-    $codgoA = validarText($codigo, true);
-    if($codgoA["error"]==false){
-        $dev['mensaje'] = "Error en el campo codigo: ".$codgoA['mensaje'];
-        $json = new Services_JSON();
-        $output = $json->encode($dev);
-        print($output);
-        exit;
-    }
+    //modificado
+ //   $codgoA = validarText($codigo, true);
+//    if($codgoA["error"]==false){
+//        $dev['mensaje'] = "Error en el campo codigo: ".$codgoA['mensaje'];
+//        $json = new Services_JSON();
+//        $output = $json->encode($dev);
+//        print($output);
+//        exit;
+//    }
     $nombreA = validarText($nombre, true);
     if($nombreA["error"]==false){
         $dev['mensaje'] = "Error en el campo nombre: ".$nombreA['mensaje'];
@@ -989,14 +990,15 @@ function GuardarEditarMateriaPrima($callback, $_dc, $idmateriaprima, $return = f
         print($output);
         exit;
     }
-    $codigoB = verificarValidarTextUnicoEdit("idmateriaprima",$idmateriaprima,false, "materiaprima", "codigo",$codigo);
-    if($codigoB["error"]==false){
-        $dev['mensaje'] = "Error en el campo codigo: ".$codigoB['mensaje'];
-        $json = new Services_JSON();
-        $output = $json->encode($dev);
-        print($output);
-        exit;
-    }
+    //modificado
+//    $codigoB = verificarValidarTextUnicoEdit("idmateriaprima",$idmateriaprima,false, "materiaprima", "codigo",$codigo);
+//    if($codigoB["error"]==false){
+//        $dev['mensaje'] = "Error en el campo codigo: ".$codigoB['mensaje'];
+//        $json = new Services_JSON();
+//        $output = $json->encode($dev);
+//        print($output);
+//        exit;
+//    }
     $sql[] = getSqlUpdateMateriaprima($idmateriaprima,$idcategoria,$idcolor,$idunidad,$nombre,$caracteristica,$stockminimo,$estado,$numero,$codigo,$calidad, $return);
     ////    MostrarConsulta($sql);
     if(ejecutarConsultaSQLBeginCommit($sql))

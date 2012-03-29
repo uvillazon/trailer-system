@@ -212,7 +212,7 @@ function ListarResponsablesIdNombre($start, $limit, $sort, $dir, $callback, $_dc
         $sql = "
 SELECT
   res.idresponsable,
-  res.nombre,
+  res.nombre, CONCAT(res.nombre ,' ', res.apellido1) as nombre,
 res.idempresa
 FROM
   responsables res $order
@@ -222,7 +222,7 @@ FROM
         $sql ="
 SELECT
   res.idresponsable,
-  res.nombre,
+   CONCAT(res.nombre ,' ', res.apellido1) as nombre,
 res.idempresa
 FROM
   responsables res WHERE $where $order

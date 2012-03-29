@@ -33,8 +33,8 @@ prd.precio1bs AS precio,
 prd.utilidad,
  prd.imagen,
   prd.descripcion,
-  ctp.nombre AS grupo,
-  gru.nombre AS categoria,
+  ctp.nombre AS categoria,
+  gru.nombre AS grupo,
   prd.idgrupo,
   prd.idcategoriaproducto
 FROM
@@ -58,8 +58,8 @@ SELECT
 prd.precio1bs AS precio,
 prd.utilidad,
   prd.descripcion,
-  ctp.nombre AS grupo,
-  gru.nombre AS categoria,
+  ctp.nombre AS categoria,
+  gru.nombre AS grupo,
   prd.idgrupo,
   prd.idcategoriaproducto
 FROM
