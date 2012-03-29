@@ -133,7 +133,7 @@ public class ListarOrdenes extends Panel {
         store = new Store(dataProxy, reader, true);
         idColumn = new ColumnConfig("Id Orden", "idordenproduccion", 200, true);
         idColumn.setWidth(100);
-        ordenColumn = new ColumnConfig("Nro. Orden Produccion", "numeroorden", (ANCHO / 8));
+        ordenColumn = new ColumnConfig("Nro. Orden Produccion", "numeroorden", (ANCHO / 8),true);
         ordenColumn.setId("expandible");
 
         clienteColumn = new ColumnConfig("Cliente/Empresa", "cliente", 200, true);
