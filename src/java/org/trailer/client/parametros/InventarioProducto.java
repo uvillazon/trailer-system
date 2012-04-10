@@ -167,10 +167,10 @@ public class InventarioProducto extends Panel {
             }
         });
 
-        detalle = new ToolbarButton("Detalle");
+        detalle = new ToolbarButton("Eliminar");
         detalle.setEnableToggle(true);
         QuickTipsConfig tipsConfig2 = new QuickTipsConfig();
-        tipsConfig2.setText("Detalle Producto");
+        tipsConfig2.setText("Eliminar Producto");
         detalle.setTooltip(tipsConfig2);
 
         pagingToolbar = new PagingToolbar(store);

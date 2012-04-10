@@ -582,10 +582,18 @@ public class Producto extends Panel {
 
                      @Override
                     public void onClick(Button button, EventObject e) {
-                        Record[] records = cbSelectionModel.getSelections();
-                     
-                            String enlTemp = "funcion=ListaProductos";
+                         Record[] records = cbSelectionModel.getSelections();
+                if (records.length == 1) {
+                    selecionado = records[0].getAsString("idproducto");
+//                    grid.stopEditing();
+//                    MessageBox.alert("aqui debe entrar el reporte o detalle del producto");
+                    String enlTemp = "funcion=detalleProducto&idproducto=" + selecionado;
                             verReporte(enlTemp);
+//                    grid.startEditing(0, 0);
+                } else {
+                    MessageBox.alert("No hay producto selecionado para eliminar y/o selecciono mas de uno.");
+                }
+//                detalleProducto.setPressed(false);
 
 
 

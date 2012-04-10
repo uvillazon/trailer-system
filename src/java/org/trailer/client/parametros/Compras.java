@@ -60,6 +60,11 @@ public class Compras extends Panel {
     private ColumnConfig fechaColumn;
     private ColumnConfig montoTotalColumn;
     private ColumnConfig observacionColumn;
+    private ColumnConfig ItemColumn;
+    private ColumnConfig UnidadColumn;
+    private ColumnConfig CantidadColumn;
+    private ColumnConfig PrecioUnitColumn;
+    private ColumnConfig OrdenProduccion;
     private final int ANCHO = Utils.getScreenWidth() - 24;
     private final int ALTO = Utils.getScreenHeight() - 270;
     private ToolbarButton editarCompra;
@@ -68,6 +73,9 @@ public class Compras extends Panel {
     private BuscadorToolBar buscadorToolBar;
     protected String buscarnrodocumento;
     protected String buscarfecha;
+    protected String buscarItem;
+    protected String buscarOP;
+    protected String buscarProveedor;
     private ToolbarButton buscar;
     PagingToolbar pagingToolbar = new PagingToolbar();  
     private ToolbarButton detalle;
@@ -110,7 +118,12 @@ public class Compras extends Panel {
                     new StringFieldDef("proveedor"),
                     new StringFieldDef("fecha"),
                     new StringFieldDef("montototal"),
-                    new StringFieldDef("observacion")
+                    new StringFieldDef("observacion"),
+                    new StringFieldDef("item"),
+                    new StringFieldDef("unidad"),
+                    new StringFieldDef("cantidad"),
+                    new StringFieldDef("preciounitario"),
+                    new StringFieldDef("op")
                 });
         JsonReader reader = new JsonReader(recordDef);
         reader.setRoot("resultado");
@@ -119,12 +132,16 @@ public class Compras extends Panel {
         store = new Store(dataProxy, reader, true);
         idColumn = new ColumnConfig("Id Compra", "idcompra",(ANCHO / 8), true);
         idColumn.setWidth(100);
-        nroDocColumn = new ColumnConfig("Nro. Documento", "numerodocumento",(ANCHO / 8));
+        nroDocColumn = new ColumnConfig("Nro. Documento", "numerodocumento",(ANCHO / 8),true);
 
-        
+        ItemColumn = new ColumnConfig("Item", "item", (ANCHO/8), true);
+        UnidadColumn = new ColumnConfig("Unidad", "unidad", 80, true);
+        CantidadColumn = new ColumnConfig("Cantidad", "cantidad", 80, true);
+        PrecioUnitColumn = new ColumnConfig("P/Unit.", "preciounitario", 100, true);
+        OrdenProduccion = new ColumnConfig("OP", "op", 100, true);
         proveedorColumn = new ColumnConfig("Proveedor", "proveedor", (ANCHO / 8), true);
         proveedorColumn.setId("expandible");
-        fechaColumn = new ColumnConfig("Fecha", "fecha", (ANCHO / 8), true);
+        fechaColumn = new ColumnConfig("Fecha", "fecha", 100, true);
         montoTotalColumn = new ColumnConfig("Monto Total", "montototal", (ANCHO / 8), true);
         observacionColumn = new ColumnConfig("Observacion", "observacion", (ANCHO / 8), true);
         observacionColumn.setId("expandible");
@@ -136,7 +153,12 @@ public class Compras extends Panel {
                     nroDocColumn,
                     proveedorColumn,
                     fechaColumn,
+                    ItemColumn,
+                    UnidadColumn,
+                    CantidadColumn,
+                    PrecioUnitColumn,
                     montoTotalColumn,
+                    OrdenProduccion,
                     observacionColumn,
                 };
 
@@ -203,8 +225,8 @@ public class Compras extends Panel {
         pagingToolbar.addButton(detalle);
         pagingToolbar.addSeparator();
 
-        String items[] = {"Nro. Documento", "Fecha"};
-        String tiposItems[] = {"text", "date"};
+        String items[] = {"Nro. Documento", "Fecha","Item","Nun.OP","Proveedor"};
+        String tiposItems[] = {"text", "date","text","text","text"};
         buscadorToolBar = new BuscadorToolBar(items, tiposItems);
         grid.setTopToolbar(buscadorToolBar.getToolbar());
         grid.setBottomToolbar(pagingToolbar);
@@ -379,7 +401,7 @@ public class Compras extends Panel {
                     public void onClick(Button button, EventObject e) {
                         Record[] records = cbSelectionModel.getSelections();
                         if (records.length == 1) {
-                            selecionado = records[0].getAsString("idcliente");
+                            selecionado = records[0].getAsString("idcompra");
                             String enlTemp = "funcion=detalleCompra&idcompra=" + selecionado;
                             verReporte(enlTemp);
 
@@ -468,6 +490,46 @@ public class Compras extends Panel {
             }
         });
 
+         //*********************************************************************
+        //***************BUSCADOR ITEMS************************************
+        //*********************************************************************
+        buscadorToolBar.getItemsText3().addListener(new TextFieldListenerAdapter() {
+
+            @Override
+            public void onSpecialKey(Field field, EventObject e) {
+                if (e.getKey() == EventObject.ENTER) {
+                    buscarSegunParametros();
+                }
+            }
+        });
+
+         //*********************************************************************
+        //***************BUSCADOR OrdenProduccion*******************************
+        //*********************************************************************
+        buscadorToolBar.getItemsText4().addListener(new TextFieldListenerAdapter() {
+
+            @Override
+            public void onSpecialKey(Field field, EventObject e) {
+                if (e.getKey() == EventObject.ENTER) {
+                    buscarSegunParametros();
+                }
+            }
+        });
+        
+        
+         //*********************************************************************
+        //***************BUSCADOR Proveedor************************************
+        //*********************************************************************
+        buscadorToolBar.getItemsText5().addListener(new TextFieldListenerAdapter() {
+
+            @Override
+            public void onSpecialKey(Field field, EventObject e) {
+                if (e.getKey() == EventObject.ENTER) {
+                    buscarSegunParametros();
+                }
+            }
+        });
+
         //*********************************************************************
         //***************BUSCADOR FECHA************************************
         //*********************************************************************
@@ -486,10 +548,17 @@ public class Compras extends Panel {
     public void buscarSegunParametros() {
         buscarnrodocumento = buscadorToolBar.getItemsText1().getText();
         buscarfecha = DateUtil.format(buscadorToolBar.getItemsDate2().getValue(), "Y-m-d");
+        buscarItem = buscadorToolBar.getItemsText3().getText();
+        buscarOP = buscadorToolBar.getItemsText4().getText();
+        buscarProveedor = buscadorToolBar.getItemsText5().getText();
         store.reload(new UrlParam[]{
                     new UrlParam("start", 0), new UrlParam("limit", 100),
                     new UrlParam("buscarnumerodocumento", buscarnrodocumento),
                     new UrlParam("buscarfecha", buscarfecha),
+                    new UrlParam("bucarItems",buscarItem),
+                    new UrlParam("buscarOP",buscarOP),
+                    new UrlParam("buscarProveedor",buscarProveedor),
+                    
                 }, false);
     }
 
