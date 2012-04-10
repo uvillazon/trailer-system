@@ -147,7 +147,7 @@ SELECT
   `det`.estado,
 `ord`.estado AS estadoop,
   ord.cliente AS cliente,
-    `det`.`detalle  AS item,
+    `det`.detalle  AS item,
 `det`.`talla`,
   `det`.`cantidad`
 FROM
@@ -155,7 +155,7 @@ FROM
 ";
     }
 
-    //   echo $sql;
+    //  echo $sql;
     if($link=new BD)
     {
         if($link->conectar())
@@ -444,8 +444,8 @@ WHERE
         for($i=0;$i<count($detalles);$i++){
             $detalle1 = $detalles[$i];
             $id = $detalle1->id;
-            //        echo "hola".$id;
-            //        exit();
+            //                    echo "hola1".$id;
+            //exit();
             $detalle = $detalle1->detalle;
             $talla = $detalle1->unidad;
             $preciounitario = $detalle1->preciounitario;
@@ -457,9 +457,20 @@ WHERE
             $detallebordado = $detalle1->detallebordado;
             $detallecostura = $detalle1->detallecostura;
             $estadoi = $detalle1->estado;
+            $id1 = split('a', $id);
+            $idProducto = "";
+            if($id1[1] == null || $id1[1] == ""){
+                $idProducto = $id;
+                //echo "hola".$id;
+            }
+            else{
+                $idProducto = $id1[1];
+              //  echo "hola1".$id1[1];
+            }
 
+            // exit();
             $iddetalleorden = "deo-".$numerodetalle;
-            $sql[] = getSqlNewDetalleorden($iddetalleorden, $idordenproduccion, $id, $detalle, $talla, $preciounitario, $cantidad, $preciototal, $numerodetalle, $cantidad, $idtela, $idcolor, $detalleitem, $detallebordado, $detallecostura, $estadoi, $return);
+            $sql[] = getSqlNewDetalleorden($iddetalleorden, $idordenproduccion, $idProducto, $detalle, $talla, $preciounitario, $cantidad, $preciototal, $numerodetalle, $cantidad, $idtela, $idcolor, $detalleitem, $detallebordado, $detallecostura, $estadoi, $return);
             //            $sql[] = getSqlNewDetalleorden($iddetalleorden, $idordenproduccion, $id, $detalle, $unidad, $preciounitario, $cantidad, $preciototal, $numerodetalle, $cantidad, $return);
             $numerodetalle++;
         }
@@ -471,7 +482,8 @@ WHERE
         print($output);
         exit;
     }
-    //  MostrarConsulta($sql);
+//    exit ();
+//      MostrarConsulta($sql);
     if(ejecutarConsultaSQLBeginCommit($sql)) {
         //        for($k=0;$k<count($movimiento);$k++){
         //            //            echo $movimiento[$j]['idproducto'];
@@ -643,8 +655,8 @@ WHERE
             $iddetalleop = $detalle1->id;
             $id1 = substr($iddetalleop,0,3);
 
-            // echo "hola".$id1;
-            //exit();
+//            echo "hola".$id1;
+//            exit();
             $detalle = $detalle1->detalle;
             $talla = $detalle1->unidad;
             $preciounitario = $detalle1->preciounitario;
@@ -657,7 +669,7 @@ WHERE
             $detallecostura = $detalle1->detallecostura;
             $estadoi = $detalle1->estado;
             $ie = substr($id1, 0, 1);
-            // echo $id1;
+           // echo $ie;
             $id2 = substr($iddetalleop, 1);
             //            exit();
             if($ie !="a"){
@@ -692,7 +704,7 @@ WHERE
         print($output);
         exit;
     }
-//    MostrarConsulta($sql);exit();
+//        MostrarConsulta($sql);exit();
     if(ejecutarConsultaSQLBeginCommit($sql)) {
         //        for($k=0;$k<count($movimiento);$k++){
         //            //            echo $movimiento[$j]['idproducto'];

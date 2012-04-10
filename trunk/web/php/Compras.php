@@ -26,24 +26,54 @@ if((permitido("fun2002", $_SESSION['codigo'])==true)||(permitido("fun2003", $_SE
         if($_GET['buscarnumerodocumento'] != null)
         {
             if($band == false) {
-                $extras .= "  cmp.numerodocumento LIKE '%".$_GET['buscarnumerodocumento']."%'";
+                $extras .= "  Com.numerodocumento LIKE '%".$_GET['buscarnumerodocumento']."%'";
                 $band = true;
             }
             else {
-                $extras .= " AND  cmp.numerodocumento LIKE '%".$_GET['buscarnumerodocumento']."%'";
+                $extras .= " AND  Com.numerodocumento LIKE '%".$_GET['buscarnumerodocumento']."%'";
             }
         }
         if($_GET['buscarfecha']){
             if($band==false){
-                $extras .= "  cmp.fecha LIKE '%".$_GET['buscarfecha']."%'";
+                $extras .= "  Com.fecha LIKE '%".$_GET['buscarfecha']."%'";
                 $band = true;
 
             }
             else {
-                $extras .= " AND  cmp.fecha LIKE '%".$_GET['buscarfecha']."%'";
+                $extras .= " AND  Com.fecha LIKE '%".$_GET['buscarfecha']."%'";
             }
 
 
+        }
+        if($_GET['bucarItems'] != null)
+        {
+            if($band == false) {
+                $extras .= "  detCom.detalle LIKE '%".$_GET['bucarItems']."%'";
+                $band = true;
+            }
+            else {
+                $extras .= " AND  detCom.detalle LIKE '%".$_GET['bucarItems']."%'";
+            }
+        }
+        if($_GET['buscarOP'] != null)
+        {
+            if($band == false) {
+                $extras .= "  detCom.op LIKE '%".$_GET['buscarOP']."%'";
+                $band = true;
+            }
+            else {
+                $extras .= " AND  detCom.op LIKE '%".$_GET['buscarOP']."%'";
+            }
+        }
+        if($_GET['buscarProveedor'] != null)
+        {
+            if($band == false) {
+                $extras .= "  prov.nombre LIKE '%".$_GET['buscarProveedor']."%'";
+                $band = true;
+            }
+            else {
+                $extras .= " AND  prov.nombre LIKE '%".$_GET['buscarProveedor']."%'";
+            }
         }
 
         ListarCompras($_GET['star'], $_GET['limit'], $_GET['sort'], $_GET['dir'], $_GET['callback'], $_GET['_dc'],$extras, false);
@@ -83,10 +113,18 @@ if((permitido("fun2002", $_SESSION['codigo'])==true)||(permitido("fun2003", $_SE
 
     //    sistema flores jaldin
     else if ($funcion =="CargarNuevaCompraFlores"){
-          CargarNuevaCompraFlores($_GET['callback'], $_GET['_dc'], $_GET['where'], false);
+        CargarNuevaCompraFlores($_GET['callback'], $_GET['_dc'], $_GET['where'], false);
 
     }
+    // reporte
+    else if ($funcion == "detalleCompra")
+    {
+        $idcompra = $_GET['idcompra'];
 
+
+       // DetalleCompras($_GET['callback'], $_GET['_dc'], $idcompra, false);
+    }
+    //fin reporte
 
     //    fin sistema flores jaldin
     else{

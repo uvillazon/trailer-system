@@ -37,6 +37,18 @@ else if($funcion == "detalleCompra"){
     detalleCompra($_GET['idcompra'], false);
 
 }
+else if($funcion == "detalleMatriaPrima")
+{
+    detalleMateriaPrima($_GET['idmateriaprima'],false);
+}
+else if($funcion == "detalleProducto")
+{
+    detalleProducto($_GET['idproducto'],false);
+}
+else if($funcion == "detalleProductoCompra")
+{
+    detalleProductoCompra($_GET['idproducto'],false);
+}
 else if($funcion == "reporteBordadoHTML"){
 
     //echo $_GET['idcompra'];
@@ -59,5 +71,8 @@ else if($funcion == "reporteBordadosHTML")
    
     ListaBordados(false);
 }
-
+else if($funcion == "detalleOrdenProduccion")
+{
+    detalleOrdenProduccion($_GET['idordenproduccion'],false);
+}
 ?>
