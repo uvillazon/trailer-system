@@ -10,6 +10,8 @@ if($_SESSION["user"] == NULL)
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
     <head>
+
+
         <meta name='gwt:module' content='org.trailer.Main=org.trailer.Main'>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <link type="text/css" rel='stylesheet' href='css/Main.css'>
@@ -27,7 +29,7 @@ if($_SESSION["user"] == NULL)
 
         <title>..::Sistemas de Produccion TRAILER - GROUP::..</title>
     </head>
-    <body>
+    <body >
         <script language="javascript" src="org.trailer.Main/org.trailer.Main.nocache.js"></script>
         <script type="text/javascript" src="org.trailer.Main/gwt.js"></script>
        

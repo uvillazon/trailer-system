@@ -48,7 +48,7 @@ WHERE
 ";
     }
 
-    //                    echo $sql;
+     //               echo $sql;
     if($link=new BD)
     {
         if($link->conectar())
@@ -337,7 +337,7 @@ WHERE
 ";
     }
 
-    //                    echo $sql;
+//                        echo $sql;
     if($link=new BD)
     {
         if($link->conectar())

@@ -556,7 +556,7 @@ WHERE
       Calle Agustín Aspiazu Nº 640<br>
       Zona Las Cuadras<br>
       </td>";
-        $html.=" <td style='width:150px;height:100px;border-bottom:1px solid #000000;text-align:center;font-size:20px;font-family:Tahoma;'>MOVIMIENTO <br>";
+        $html.=" <td style='width:150px;height:100px;border-bottom:1px solid #000000;text-align:center;font-size:20px;font-family:Tahoma;'>COMPRA <br>";
         $html.="      DE<br>";
         $html.="PRODUCTOS</td>";
         $html.="  <td style='width:200px;height:100px;border-bottom:1px solid #000000;text-align:right;font-size:11px;font-family:Tahoma;'>";
@@ -621,23 +621,699 @@ WHERE
         $html.="   <tr>";
         $html.="     <td><strong>Son:</strong>  ".convertir_a_letras($totalMonto);
         $html.="</td>";
-        $html.="     <td></td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Precio</td>";
+        $html.="   </tr>";
 
-        $html.="     <td>Total Precio</td>";
+//        $html.="   <tr>";
+//        $html.="     <td></td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Descuento</td>";
+//        $html.="   </tr>";
+//        $html.="   <tr>";
+//        $html.="     <td></td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Compra</td>";
+//        $html.="   </tr>";
+
+        $html.="   <tr><td colspan='4' align='center' style='border-top:solid 1px #000000;'><div id='pie'>";
+        $html.="   <p><br />
+         Cochabamba - Bolivia<br />
+         Telf.: 4233928 - 4542962
+    </p>
+</div></td></tr>
+
+    </table>
+    </body>
+    </html>";
+        if($return == true)
+        {
+            return $html;
+        }
+        else
+        {
+            echo $html;
+        }
+    }
+}
+
+function detalleMateriaPrima($idmateriaprima,$return)
+{
+
+        $sql = "
+SELECT
+   
+  matpri.nombre,
+ matpri.caracteristica,
+  matpri.calidad, 
+  cat.nombre AS categoria,
+  uni.nombre AS unidad,
+  karmatpr.saldocantidad AS cantidad,
+  col.nombre as color
+FROM
+  materiaprima matpri,
+  categorias cat,
+  unidades uni,
+  colores col,
+  kardexmateriaprima karmatpr
+WHERE
+  matpri.idcategoria = cat.idcategoria AND
+  col.idcolor = matpri.idcolor AND
+  matpri.idunidad = uni.idunidad AND
+  matpri.idmateriaprima = karmatpr.idkardexmateriaprima
+ and matpri.idmateriaprima = '$idmateriaprima'
+
+";
+//    echo $sql;
+    $datos = getTablaToArrayOfSQL($sql);
+    if($datos['error'] == "false")
+    {
+        echo "No existe esta materia Prima ...............";
+        exit;
+    }
+    else
+    {
+        $ven = $datos["resultado"];
+        $responsable = $ven[0]['encargado'];
+        $proveedor = $ven[0]['proveedor'];
+        $totalMonto = $ven[0]['montototal'];
+        $totalDescuento = $ven[0]['descuentobs'];
+        $totalNeto = $ven[0]['montoapagar'];
+
+
+        //$totalMonto = redondear($totalMonto, $_SESSION['usrDigitos']);
+        //$totalCredito = redondear($totalCredito, $_SESSION['usrDigitos']);
+        $totalDescuento = redondear($totalDescuento, $_SESSION['usrDigitos']);
+        $totalNeto = redondear($totalNeto, $_SESSION['usrDigitos']);
+
+/*aqui modificamos los campos segun la monedad */
+        $hoy = date("Y-m-d");
+
+        $html.="    <!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>";
+        $html.="<html>";
+        $html.=" <head>";
+        $html.=" <title></title>";
+        $html.=" <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>";
+        // $html.=" <link href='".$_SESSION["ruta"]."css/print.css' rel='stylesheet' type='text/css' media='all'>";
+        //<link href='../print.css' rel='stylesheet' type='text/css' media='all'>
+        $html.="  </head>";
+        $html.="  <body>";
+        $html.=" <table cellpadding='0' cellspacing='0' border='0' style='width:750px; font-size:11px; font-family:Tahoma;'>";
+        $html.="  <tr>";
+        $html.="  <td style='width:400px;height:100px;border-bottom:1px solid #000000;'>ROPA DE TRABAJO Y MATERIAL PUBLICITARIO TEXTIL<br>
+      De: Martha Magne Iquise<br>
+      Calle Agustín Aspiazu Nº 640<br>
+      Zona Las Cuadras<br>
+      </td>";
+        $html.=" <td style='width:150px;height:100px;border-bottom:1px solid #000000;text-align:center;font-size:20px;font-family:Tahoma;'>DETALLE <br>";
+        $html.="      DE<br>";
+        $html.="MATERIA PRIMA</td>";
+        $html.="  <td style='width:200px;height:100px;border-bottom:1px solid #000000;text-align:right;font-size:11px;font-family:Tahoma;'>";
+        $html.="   <table cellpadding='0' cellspacing='0' border='0' style='width:200px;'>";
+        $html.="   <tr>";
+        $html.="     <td align='right'>";
+        $html.=" <tr><td> </td> FECHA:  $hoy     </tr>";
+        $html.="  <td>";
+        $html.="   <tr>";
+        $html.="       <tr>";
+        $html.="        <td align='right' style='font-size:11px; font-family:Tahoma; text-align:center;font-weight:bold;'>";
+
+        $html.="         <td><tr>";
+        $html.="  </table>";
+        $html.="   </td>";
+        $html.="   </tr>";
+        $html.="   <tr>";
+        $html.="   <td colspan='3'>";
+        $html.="   <table cellpadding='0' cellspacing='0' border='0' style='width:750px; font-size:11px; font-family:Tahoma;'>";
+        $html.="   <tr><td style='width:100px;font-size:11px;font-weight:bold;'></td><td style='width:500px;' ></td></tr><br>";
+        $html.="    </table>";
+        $html.="    </td>";
+        $html.="   </tr>";
+
+        $html.="          <tr>";
+        $html.="  <td colspan='1'>";
+
+        $html.="   </td>";
+
+        $html.="   <tr>";
+        $html.="     <td>";
+        $html.="<strong>Responsable:</strong> ".$responsable;
+        $html.="</td>";
         $html.="   </tr>";
 
         $html.="   <tr>";
-        $html.="     <td></td>";
-        $html.="     <td></td>";
-
-        $html.="     <td>Total Descuento</td>";
+        $html.="     <td>";
+        $html.="<strong>Proveedor: </strong>".$proveedor;
+        $html.="</td>";
         $html.="   </tr>";
         $html.="   <tr>";
-        $html.="     <td></td>";
-        $html.="     <td></td>";
-
-        $html.="     <td>Total Compra</td>";
+        $html.="     <td><strong>Por lo Siguiente:....</strong></td>";
         $html.="   </tr>";
+        $sql1 = "SELECT
+  det.cantidad AS Cantidad,
+  det.detalle AS Detalle,
+  det.unidad AS Unidad,
+  det.preciounitario AS `P/uni`,
+  det.preciototal AS Total
+FROM
+  detallecompra det
+WHERE
+  det.idcompra = '$idcompra'";
+        $table = dibujarTablaOfSQLNormal($sql, "Detalle Materia Prima");
+        $html.="  <tr><td colspan='4' align='center'><div id='pie'>";
+        $html.="  <p>";
+        $html.=$table['resultado'];
+        $html .="</p>";
+        $html.="  <p> </p>";
+        $html.=" </div></td></tr>";
+
+        $html.="   <tr>";
+        $html.="     <td><strong>Son:</strong>  ".convertir_a_letras($totalMonto);
+        $html.="</td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Precio</td>";
+        $html.="   </tr>";
+
+//        $html.="   <tr>";
+//        $html.="     <td></td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Descuento</td>";
+//        $html.="   </tr>";
+//        $html.="   <tr>";
+//        $html.="     <td></td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Compra</td>";
+//        $html.="   </tr>";
+
+        $html.="   <tr><td colspan='4' align='center' style='border-top:solid 1px #000000;'><div id='pie'>";
+        $html.="   <p><br />
+         Cochabamba - Bolivia<br />
+         Telf.: 4233928 - 4542962
+    </p>
+</div></td></tr>
+
+    </table>
+    </body>
+    </html>";
+        if($return == true)
+        {
+            return $html;
+        }
+        else
+        {
+            echo $html;
+        }
+    }
+}
+function detalleProducto($idproducto)
+{
+    //    $html = "";
+    $sql = "
+SELECT
+
+  prd.nombre,
+  prd.medidas,
+  prd.tela,
+  prd.codigo,
+prd.precio1bs AS precio,
+prd.utilidad,
+
+  prd.descripcion,
+  ctp.nombre AS categoria,
+  gru.nombre AS grupo
+ 
+FROM
+  productos prd,
+  categoriaproducto ctp,
+  grupos gru
+WHERE
+  prd.idcategoriaproducto = ctp.idcategoriaproducto AND
+  prd.idgrupo = gru.idgrupo AND gru.nombre <> 'logos'
+  and prd.idproducto='$idproducto'
+
+";
+//    echo $sql;
+    $datos = getTablaToArrayOfSQL($sql);
+    if($datos['error'] == "false")
+    {
+        echo "No existe este Producto ...............";
+        exit;
+    }
+    else
+    {
+        $ven = $datos["resultado"];
+        $responsable = $ven[0]['encargado'];
+        $proveedor = $ven[0]['proveedor'];
+        $totalMonto = $ven[0]['montototal'];
+        $totalDescuento = $ven[0]['descuentobs'];
+        $totalNeto = $ven[0]['montoapagar'];
+
+
+        //$totalMonto = redondear($totalMonto, $_SESSION['usrDigitos']);
+        //$totalCredito = redondear($totalCredito, $_SESSION['usrDigitos']);
+        $totalDescuento = redondear($totalDescuento, $_SESSION['usrDigitos']);
+        $totalNeto = redondear($totalNeto, $_SESSION['usrDigitos']);
+
+/*aqui modificamos los campos segun la monedad */
+        $hoy = date("Y-m-d");
+
+        $html.="    <!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>";
+        $html.="<html>";
+        $html.=" <head>";
+        $html.=" <title></title>";
+        $html.=" <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>";
+        // $html.=" <link href='".$_SESSION["ruta"]."css/print.css' rel='stylesheet' type='text/css' media='all'>";
+        //<link href='../print.css' rel='stylesheet' type='text/css' media='all'>
+        $html.="  </head>";
+        $html.="  <body>";
+        $html.=" <table cellpadding='0' cellspacing='0' border='0' style='width:750px; font-size:11px; font-family:Tahoma;'>";
+        $html.="  <tr>";
+        $html.="  <td style='width:400px;height:100px;border-bottom:1px solid #000000;'>ROPA DE TRABAJO Y MATERIAL PUBLICITARIO TEXTIL<br>
+      De: Martha Magne Iquise<br>
+      Calle Agustín Aspiazu Nº 640<br>
+      Zona Las Cuadras<br>
+      </td>";
+        $html.=" <td style='width:150px;height:100px;border-bottom:1px solid #000000;text-align:center;font-size:20px;font-family:Tahoma;'>DETALLE <br>";
+        $html.="      DE<br>";
+        $html.="PRODUCTO</td>";
+        $html.="  <td style='width:200px;height:100px;border-bottom:1px solid #000000;text-align:right;font-size:11px;font-family:Tahoma;'>";
+        $html.="   <table cellpadding='0' cellspacing='0' border='0' style='width:200px;'>";
+        $html.="   <tr>";
+        $html.="     <td align='right'>";
+        $html.=" <tr><td> </td> FECHA:  $hoy     </tr>";
+        $html.="  <td>";
+        $html.="   <tr>";
+        $html.="       <tr>";
+        $html.="        <td align='right' style='font-size:11px; font-family:Tahoma; text-align:center;font-weight:bold;'>";
+
+        $html.="         <td><tr>";
+        $html.="  </table>";
+        $html.="   </td>";
+        $html.="   </tr>";
+        $html.="   <tr>";
+        $html.="   <td colspan='3'>";
+        $html.="   <table cellpadding='0' cellspacing='0' border='0' style='width:750px; font-size:11px; font-family:Tahoma;'>";
+        $html.="   <tr><td style='width:100px;font-size:11px;font-weight:bold;'></td><td style='width:500px;' ></td></tr><br>";
+        $html.="    </table>";
+        $html.="    </td>";
+        $html.="   </tr>";
+
+        $html.="          <tr>";
+        $html.="  <td colspan='1'>";
+
+        $html.="   </td>";
+
+        $html.="   <tr>";
+        $html.="     <td>";
+        $html.="<strong>Responsable:</strong> ".$responsable;
+        $html.="</td>";
+        $html.="   </tr>";
+
+        $html.="   <tr>";
+        $html.="     <td>";
+        $html.="<strong>Proveedor: </strong>".$proveedor;
+        $html.="</td>";
+        $html.="   </tr>";
+        $html.="   <tr>";
+        $html.="     <td><strong>Por lo Siguiente:....</strong></td>";
+        $html.="   </tr>";
+//        $sql1 = "SELECT
+//  det.cantidad AS Cantidad,
+//  det.detalle AS Detalle,
+//  det.unidad AS Unidad,
+//  det.preciounitario AS `P/uni`,
+//  det.preciototal AS Total
+//FROM
+//  detallecompra det
+//WHERE
+//  det.idcompra = '$idcompra'";
+        $table = dibujarTablaOfSQLNormal($sql, "Detalle de Producto");
+        $html.="  <tr><td colspan='4' align='center'><div id='pie'>";
+        $html.="  <p>";
+        $html.=$table['resultado'];
+        $html .="</p>";
+        $html.="  <p> </p>";
+        $html.=" </div></td></tr>";
+
+        $html.="   <tr>";
+        $html.="     <td><strong>Son:</strong>  ".convertir_a_letras($totalMonto);
+        $html.="</td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Precio</td>";
+        $html.="   </tr>";
+
+//        $html.="   <tr>";
+//        $html.="     <td></td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Descuento</td>";
+//        $html.="   </tr>";
+//        $html.="   <tr>";
+//        $html.="     <td></td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Compra</td>";
+//        $html.="   </tr>";
+
+        $html.="   <tr><td colspan='4' align='center' style='border-top:solid 1px #000000;'><div id='pie'>";
+        $html.="   <p><br />
+         Cochabamba - Bolivia<br />
+         Telf.: 4233928 - 4542962
+    </p>
+</div></td></tr>
+
+    </table>
+    </body>
+    </html>";
+        if($return == true)
+        {
+            return $html;
+        }
+        else
+        {
+            echo $html;
+        }
+    }
+}
+
+function detalleProductoCompra($idproducto,$return)
+{
+    //    $html = "";
+    $sql = "
+SELECT
+  mat.idmateriaprima AS id,
+  CONCAT(mat.nombre,' ', col.nombre) AS nombre,
+  uni.nombre as unidad,
+ cat.`nombre` as categoria
+FROM
+  `materiaprima` mat,
+  `unidades` uni,
+   colores col,
+   `categorias` cat
+WHERE
+  mat.idunidad = uni.idunidad AND
+  mat.idcategoria = cat.idcategoria and mat.idcolor = col.idcolor and mat.idmateriaprima='$idproducto'
+
+
+";
+//    echo $sql;
+    $datos = getTablaToArrayOfSQL($sql);
+    if($datos['error'] == "false")
+    {
+        echo "No existe este Producto ...............";
+        exit;
+    }
+    else
+    {
+        $ven = $datos["resultado"];
+        $responsable = $ven[0]['encargado'];
+        $proveedor = $ven[0]['proveedor'];
+        $totalMonto = $ven[0]['montototal'];
+        $totalDescuento = $ven[0]['descuentobs'];
+        $totalNeto = $ven[0]['montoapagar'];
+
+
+        //$totalMonto = redondear($totalMonto, $_SESSION['usrDigitos']);
+        //$totalCredito = redondear($totalCredito, $_SESSION['usrDigitos']);
+        $totalDescuento = redondear($totalDescuento, $_SESSION['usrDigitos']);
+        $totalNeto = redondear($totalNeto, $_SESSION['usrDigitos']);
+
+/*aqui modificamos los campos segun la monedad */
+        $hoy = date("Y-m-d");
+
+        $html.="    <!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>";
+        $html.="<html>";
+        $html.=" <head>";
+        $html.=" <title></title>";
+        $html.=" <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>";
+        // $html.=" <link href='".$_SESSION["ruta"]."css/print.css' rel='stylesheet' type='text/css' media='all'>";
+        //<link href='../print.css' rel='stylesheet' type='text/css' media='all'>
+        $html.="  </head>";
+        $html.="  <body>";
+        $html.=" <table cellpadding='0' cellspacing='0' border='0' style='width:750px; font-size:11px; font-family:Tahoma;'>";
+        $html.="  <tr>";
+        $html.="  <td style='width:400px;height:100px;border-bottom:1px solid #000000;'>ROPA DE TRABAJO Y MATERIAL PUBLICITARIO TEXTIL<br>
+      De: Martha Magne Iquise<br>
+      Calle Agustín Aspiazu Nº 640<br>
+      Zona Las Cuadras<br>
+      </td>";
+        $html.=" <td style='width:150px;height:100px;border-bottom:1px solid #000000;text-align:center;font-size:20px;font-family:Tahoma;'>DETALLE <br>";
+        $html.="      DE<br>";
+        $html.="PRODUCTO</td>";
+        $html.="  <td style='width:200px;height:100px;border-bottom:1px solid #000000;text-align:right;font-size:11px;font-family:Tahoma;'>";
+        $html.="   <table cellpadding='0' cellspacing='0' border='0' style='width:200px;'>";
+        $html.="   <tr>";
+        $html.="     <td align='right'>";
+        $html.=" <tr><td> </td> FECHA:  $hoy     </tr>";
+        $html.="  <td>";
+        $html.="   <tr>";
+        $html.="       <tr>";
+        $html.="        <td align='right' style='font-size:11px; font-family:Tahoma; text-align:center;font-weight:bold;'>";
+
+        $html.="         <td><tr>";
+        $html.="  </table>";
+        $html.="   </td>";
+        $html.="   </tr>";
+        $html.="   <tr>";
+        $html.="   <td colspan='3'>";
+        $html.="   <table cellpadding='0' cellspacing='0' border='0' style='width:750px; font-size:11px; font-family:Tahoma;'>";
+        $html.="   <tr><td style='width:100px;font-size:11px;font-weight:bold;'></td><td style='width:500px;' ></td></tr><br>";
+        $html.="    </table>";
+        $html.="    </td>";
+        $html.="   </tr>";
+
+        $html.="          <tr>";
+        $html.="  <td colspan='1'>";
+
+        $html.="   </td>";
+
+        $html.="   <tr>";
+        $html.="     <td>";
+        $html.="<strong>Responsable:</strong> ".$responsable;
+        $html.="</td>";
+        $html.="   </tr>";
+
+        $html.="   <tr>";
+        $html.="     <td>";
+        $html.="<strong>Proveedor: </strong>".$proveedor;
+        $html.="</td>";
+        $html.="   </tr>";
+        $html.="   <tr>";
+        $html.="     <td><strong>Por lo Siguiente:....</strong></td>";
+        $html.="   </tr>";
+//        $sql1 = "SELECT
+//  det.cantidad AS Cantidad,
+//  det.detalle AS Detalle,
+//  det.unidad AS Unidad,
+//  det.preciounitario AS `P/uni`,
+//  det.preciototal AS Total
+//FROM
+//  detallecompra det
+//WHERE
+//  det.idcompra = '$idcompra'";
+        $table = dibujarTablaOfSQLNormal($sql, "Detalle de Producto");
+        $html.="  <tr><td colspan='4' align='center'><div id='pie'>";
+        $html.="  <p>";
+        $html.=$table['resultado'];
+        $html .="</p>";
+        $html.="  <p> </p>";
+        $html.=" </div></td></tr>";
+
+        $html.="   <tr>";
+        $html.="     <td><strong>Son:</strong>  ".convertir_a_letras($totalMonto);
+        $html.="</td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Precio</td>";
+        $html.="   </tr>";
+
+//        $html.="   <tr>";
+//        $html.="     <td></td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Descuento</td>";
+//        $html.="   </tr>";
+//        $html.="   <tr>";
+//        $html.="     <td></td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Compra</td>";
+//        $html.="   </tr>";
+
+        $html.="   <tr><td colspan='4' align='center' style='border-top:solid 1px #000000;'><div id='pie'>";
+        $html.="   <p><br />
+         Cochabamba - Bolivia<br />
+         Telf.: 4233928 - 4542962
+    </p>
+</div></td></tr>
+
+    </table>
+    </body>
+    </html>";
+        if($return == true)
+        {
+            return $html;
+        }
+        else
+        {
+            echo $html;
+        }
+    }
+}
+
+function detalleOrdenProduccion($idOrdenProduccion,$return)
+{
+    //    $html = "";
+    $sql = "
+SELECT
+
+  det.detalle,
+  det.talla AS unidad,
+  det.cantidad,
+  det.preciounitario ,
+  det.total AS preciototal,
+
+  det.detalleitem AS detalle1,
+  det.detallebordado,
+  det.detallecostura
+ 
+FROM
+  detalleorden det
+WHERE
+  det.idordenproduccion = '$idOrdenProduccion'
+
+
+";
+//    echo $sql;
+    $datos = getTablaToArrayOfSQL($sql);
+    if($datos['error'] == "false")
+    {
+        echo "No existe este Producto ...............";
+        exit;
+    }
+    else
+    {
+        $ven = $datos["resultado"];
+        $responsable = $ven[0]['encargado'];
+        $proveedor = $ven[0]['proveedor'];
+        $totalMonto = $ven[0]['montototal'];
+        $totalDescuento = $ven[0]['descuentobs'];
+        $totalNeto = $ven[0]['montoapagar'];
+
+
+        //$totalMonto = redondear($totalMonto, $_SESSION['usrDigitos']);
+        //$totalCredito = redondear($totalCredito, $_SESSION['usrDigitos']);
+        $totalDescuento = redondear($totalDescuento, $_SESSION['usrDigitos']);
+        $totalNeto = redondear($totalNeto, $_SESSION['usrDigitos']);
+
+/*aqui modificamos los campos segun la monedad */
+        $hoy = date("Y-m-d");
+
+        $html.="    <!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>";
+        $html.="<html>";
+        $html.=" <head>";
+        $html.=" <title></title>";
+        $html.=" <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>";
+        // $html.=" <link href='".$_SESSION["ruta"]."css/print.css' rel='stylesheet' type='text/css' media='all'>";
+        //<link href='../print.css' rel='stylesheet' type='text/css' media='all'>
+        $html.="  </head>";
+        $html.="  <body>";
+        $html.=" <table cellpadding='0' cellspacing='0' border='0' style='width:750px; font-size:11px; font-family:Tahoma;'>";
+        $html.="  <tr>";
+        $html.="  <td style='width:400px;height:100px;border-bottom:1px solid #000000;'>ROPA DE TRABAJO Y MATERIAL PUBLICITARIO TEXTIL<br>
+      De: Martha Magne Iquise<br>
+      Calle Agustín Aspiazu Nº 640<br>
+      Zona Las Cuadras<br>
+      </td>";
+        $html.=" <td style='width:150px;height:100px;border-bottom:1px solid #000000;text-align:center;font-size:20px;font-family:Tahoma;'>DETALLE <br>";
+        $html.="      DE<br>";
+        $html.="ORDEN</td>";
+        $html.="  <td style='width:200px;height:100px;border-bottom:1px solid #000000;text-align:right;font-size:11px;font-family:Tahoma;'>";
+        $html.="   <table cellpadding='0' cellspacing='0' border='0' style='width:200px;'>";
+        $html.="   <tr>";
+        $html.="     <td align='right'>";
+        $html.=" <tr><td> </td> FECHA:  $hoy     </tr>";
+        $html.="  <td>";
+        $html.="   <tr>";
+        $html.="       <tr>";
+        $html.="        <td align='right' style='font-size:11px; font-family:Tahoma; text-align:center;font-weight:bold;'>";
+
+        $html.="         <td><tr>";
+        $html.="  </table>";
+        $html.="   </td>";
+        $html.="   </tr>";
+        $html.="   <tr>";
+        $html.="   <td colspan='3'>";
+        $html.="   <table cellpadding='0' cellspacing='0' border='0' style='width:750px; font-size:11px; font-family:Tahoma;'>";
+        $html.="   <tr><td style='width:100px;font-size:11px;font-weight:bold;'></td><td style='width:500px;' ></td></tr><br>";
+        $html.="    </table>";
+        $html.="    </td>";
+        $html.="   </tr>";
+
+        $html.="          <tr>";
+        $html.="  <td colspan='1'>";
+
+        $html.="   </td>";
+
+        $html.="   <tr>";
+        $html.="     <td>";
+        $html.="<strong>Responsable:</strong> ".$responsable;
+        $html.="</td>";
+        $html.="   </tr>";
+
+        $html.="   <tr>";
+        $html.="     <td>";
+        $html.="<strong>Proveedor: </strong>".$proveedor;
+        $html.="</td>";
+        $html.="   </tr>";
+        $html.="   <tr>";
+        $html.="     <td><strong>Por lo Siguiente:....</strong></td>";
+        $html.="   </tr>";
+//        $sql1 = "SELECT
+//  det.cantidad AS Cantidad,
+//  det.detalle AS Detalle,
+//  det.unidad AS Unidad,
+//  det.preciounitario AS `P/uni`,
+//  det.preciototal AS Total
+//FROM
+//  detallecompra det
+//WHERE
+//  det.idcompra = '$idcompra'";
+        $table = dibujarTablaOfSQLNormal($sql, "Detalle de Producto");
+        $html.="  <tr><td colspan='4' align='center'><div id='pie'>";
+        $html.="  <p>";
+        $html.=$table['resultado'];
+        $html .="</p>";
+        $html.="  <p> </p>";
+        $html.=" </div></td></tr>";
+
+        $html.="   <tr>";
+        $html.="     <td><strong>Son:</strong>  ".convertir_a_letras($totalMonto);
+        $html.="</td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Precio</td>";
+        $html.="   </tr>";
+
+//        $html.="   <tr>";
+//        $html.="     <td></td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Descuento</td>";
+//        $html.="   </tr>";
+//        $html.="   <tr>";
+//        $html.="     <td></td>";
+//        $html.="     <td></td>";
+//
+//        $html.="     <td>Total Compra</td>";
+//        $html.="   </tr>";
 
         $html.="   <tr><td colspan='4' align='center' style='border-top:solid 1px #000000;'><div id='pie'>";
         $html.="   <p><br />
