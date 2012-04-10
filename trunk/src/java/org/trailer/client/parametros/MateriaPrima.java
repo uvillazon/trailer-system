@@ -478,6 +478,9 @@ public class MateriaPrima extends Panel {
                         if (records.length == 1) {
                             String idmateriaprima = records[0].getAsString("idmateriaprima");
 
+                            String enlTemp = "funcion=detalleMatriaPrima&idmateriaprima=" + idmateriaprima;
+                            verReporte(enlTemp);
+
                         } else {
 
                             Utils.setErrorPrincipal("seleccione una Materia Prima para cambiar estado", "error");

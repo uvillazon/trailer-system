@@ -97,7 +97,7 @@ public class Proveedor extends Panel {
         store = new Store(dataProxy, reader, true);
         idColumn = new ColumnConfig("Id Proveedor", "idproveedor",(ANCHO / 8), true);
         idColumn.setWidth(100);
-        codigoColumn = new ColumnConfig("Codigo", "codigo",(ANCHO / 8));
+        codigoColumn = new ColumnConfig("Codigo", "codigo",(ANCHO / 8),true);
 
         
         ciudadColumn = new ColumnConfig("Ciudad", "ciudad", (ANCHO / 8), true);

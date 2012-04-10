@@ -451,7 +451,7 @@ public class ListarOrdenes extends Panel {
                         Record[] records = cbSelectionModel.getSelections();
                         if (records.length == 1) {
                             selecionado = records[0].getAsString("idordenproduccion");
-                            String enlTemp = "funcion=detalleCompra&idordenproduccion=" + selecionado;
+                            String enlTemp = "funcion=detalleOrdenProduccion&idordenproduccion=" + selecionado;
                             verReporte(enlTemp);
 
                         } else {

@@ -107,7 +107,7 @@ public class Responsable extends Panel {
         store = new Store(dataProxy, reader, true);
         idColumn = new ColumnConfig("Id Responsable", "idresponsable", (ANCHO / 7), true);
         idColumn.setWidth(100);
-        codigoColumn = new ColumnConfig("Codigo", "codigo", (ANCHO / 7));
+        codigoColumn = new ColumnConfig("Codigo", "codigo", (ANCHO / 7),true);
 
         codigoColumn.setId("expandible");
         ciudadColumn = new ColumnConfig("Ciudad", "ciudad", (ANCHO / 7), true);

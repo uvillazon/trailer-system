@@ -288,17 +288,43 @@ public class ReporteOrdenes extends Panel {
                 Integer anio12 = Integer.parseInt(resultado[0]);
                 Integer mes12 = Integer.parseInt(resultado[1]);
                 Integer dias12 = Integer.parseInt(resultado[2]);
-
+                String dias1 = "";
+                String dias2 = "";
+                String dias3 = "";
                 String mes1 = "";
                 if (mes < 10) {
                     mes1 = "0" + mes.toString();
                 } else {
                     mes1 = mes.toString();
                 }
+                if(dia < 10)
+                {
+                    dias1 = "0"+dia.toString();
+                }
+                else
+                {
+                    dias1 = dia.toString();
+                }
+                 if(dia1 < 10)
+                {
+                    dias2 = "0"+dia1.toString();
+                }
+                else
+                {
+                    dias2 = dia1.toString();
+                }
+                if(dia2 < 10)
+                {
+                    dias3 = "0"+dia2.toString();
+                }
+                else
+                {
+                    dias3 = dia2.toString();
+                }
 //                 return mes1;
-                String hoy = anio.toString() + "-" + mes1 + "-" + dia.toString();
-                String ayer = anio.toString() + "-" + mes1 + "-" + dia1.toString();
-                String pasado = anio.toString() + "-" + mes1 + "-" + dia2.toString();
+                String hoy = anio.toString() + "-" + mes1 + "-" + dias1.toString();
+                String ayer = anio.toString() + "-" + mes1 + "-" + dias2.toString();
+                String pasado = anio.toString() + "-" + mes1 + "-" + dias3.toString();
                 // MessageBox.alert("fecha"+fecha+"-llego-"+hoy+"-ayer-"+ayer+"-pasado-"+pasado);
 //                  MessageBox.alert("llego1"+ayer);
                 //   MessageBox.alert("llego2"+pasado);
@@ -344,7 +370,7 @@ public class ReporteOrdenes extends Panel {
                         }
                         else
                         {
-                            cadena = "DARK_GRAY";
+                            cadena = "NONE";
                         }
                     }
                 }

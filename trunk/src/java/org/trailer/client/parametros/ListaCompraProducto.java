@@ -32,6 +32,7 @@ import com.gwtext.client.widgets.form.TextField;
 import com.gwtext.client.widgets.grid.GridEditor;
 import com.gwtext.client.widgets.grid.RowSelectionModel;
 import com.gwtext.client.widgets.grid.event.GridRowListenerAdapter;
+import org.trailer.client.util.ReporteMediaCartaChorroWindow;
 
 /**
  *
@@ -220,7 +221,9 @@ public class ListaCompraProducto {
                 if (records.length == 1) {
                     selecionado = records[0].getAsString("id");
                     grid.stopEditing();
-                    MessageBox.alert("aqui debe entrar el reporte o detalle del producto");
+                    MessageBox.alert("aqui debe entrar el reporte o detalle del producto"+selecionado);
+                    String enlTemp = "funcion=detalleProducto&idproducto=" + selecionado;
+                            verReporte(enlTemp);
                     grid.startEditing(0, 0);
                 } else {
                     MessageBox.alert("No hay producto selecionado para eliminar y/o selecciono mas de uno.");
@@ -294,5 +297,9 @@ public class ListaCompraProducto {
 
     public ColumnModel getColumnModel() {
         return columnModel;
+    }
+     private void verReporte(String enlace) {
+        ReporteMediaCartaChorroWindow print = new ReporteMediaCartaChorroWindow(enlace);
+        print.show();
     }
 }

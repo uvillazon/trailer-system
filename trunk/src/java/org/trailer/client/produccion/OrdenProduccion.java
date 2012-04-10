@@ -775,6 +775,7 @@ public class OrdenProduccion extends Panel {
 
         tex_numeroproduccion.setValue(numeroorden);
         dat_fecharecepcion.setValue(fecha);
+        dat_fechaentrega.setValue(fecha);
     }
 
     private void initValues2() {

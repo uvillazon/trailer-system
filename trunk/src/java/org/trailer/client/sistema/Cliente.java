@@ -110,7 +110,7 @@ public class Cliente extends Panel {
         store = new Store(dataProxy, reader, true);
         idColumn = new ColumnConfig("Id Cliente", "idcliente",(ANCHO / 8), true);
         idColumn.setWidth(100);
-        codigoColumn = new ColumnConfig("Codigo", "codigo",(ANCHO / 8));
+        codigoColumn = new ColumnConfig("Codigo", "codigo",(ANCHO / 8),true);
 
         codigoColumn.setId("expandible");
         ciudadColumn = new ColumnConfig("Ciudad", "ciudad", (ANCHO / 8), true);

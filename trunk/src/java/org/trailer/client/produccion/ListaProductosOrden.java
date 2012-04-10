@@ -49,6 +49,7 @@ import com.gwtext.client.widgets.grid.GridView;
 import com.gwtext.client.widgets.grid.RowParams;
 import com.gwtext.client.widgets.layout.TableLayout;
 import org.trailer.client.util.Conector;
+import org.trailer.client.util.ReporteMediaCartaChorroWindow;
 
 /**
  *
@@ -278,11 +279,11 @@ public class ListaProductosOrden {
         pagingToolbar.setDisplayMsg("Mostrando {0} - {1} de {2}");
         pagingToolbar.setEmptyMsg("No topics to display");
 
-        pagingToolbar.addButton(QuitarGrilla);
+//        pagingToolbar.addButton(QuitarGrilla);
         pagingToolbar.addSeparator();
         pagingToolbar.addButton(eliminarProducto);
          pagingToolbar.addSeparator();
-        pagingToolbar.addButton(detalleProducto);
+      //  pagingToolbar.addButton(detalleProducto);
 
         grid.setBottomToolbar(pagingToolbar);
 
@@ -439,7 +440,9 @@ public class ListaProductosOrden {
                 if (records.length == 1) {
                     selecionado = records[0].getAsString("id");
                     grid.stopEditing();
-                    MessageBox.alert("aqui debe entrar el reporte o detalle del producto");
+                   // MessageBox.alert("es "+selecionado);
+                     String enlTemp = "funcion=detalleProducto&idproducto=" + selecionado;
+                            verReporte(enlTemp);
                     grid.startEditing(0, 0);
                 } else {
                     MessageBox.alert("No hay producto selecionado para eliminar y/o selecciono mas de uno.");
@@ -450,27 +453,27 @@ public class ListaProductosOrden {
 
 
         //QUITAR PRODUCTO DE LA GRILLA
-        QuitarGrilla.addListener(new ButtonListenerAdapter() {
-
-            private boolean procederAEliminar;
-            int repeat = 0;
-
-            @Override
-            public void onClick(Button button, EventObject e) {
-                Record[] records = cbSelectionModel.getSelections();
-                if (records.length == 1) {
-                    selecionado = records[0].getAsString("id");
-
-                  grid.stopEditing();
-                  store.remove(cbSelectionModel.getSelected());
-                  grid.startEditing(0, 0);
-
-                } else {
-                    MessageBox.alert("No hay producto selecionado para eliminar y/o selecciono mas de uno.");
-                }
-                detalleProducto.setPressed(false);
-            }
-        });
+//        QuitarGrilla.addListener(new ButtonListenerAdapter() {
+//
+//            private boolean procederAEliminar;
+//            int repeat = 0;
+//
+//            @Override
+//            public void onClick(Button button, EventObject e) {
+//                Record[] records = cbSelectionModel.getSelections();
+//                if (records.length == 1) {
+//                    selecionado = records[0].getAsString("id");
+//
+//                  grid.stopEditing();
+//                  store.remove(cbSelectionModel.getSelected());
+//                  grid.startEditing(0, 0);
+//
+//                } else {
+//                    MessageBox.alert("No hay producto selecionado para eliminar y/o selecciono mas de uno.");
+//                }
+//                detalleProducto.setPressed(false);
+//            }
+//        });
 
 
 
@@ -720,5 +723,10 @@ public class ListaProductosOrden {
 
     public CheckboxSelectionModel getSelectionModel() {
         return cbSelectionModel;
+    }
+
+     private void verReporte(String enlace) {
+        ReporteMediaCartaChorroWindow print = new ReporteMediaCartaChorroWindow(enlace);
+        print.show();
     }
 }
